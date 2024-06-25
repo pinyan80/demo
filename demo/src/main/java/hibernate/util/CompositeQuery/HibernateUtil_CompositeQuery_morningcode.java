@@ -26,7 +26,7 @@ import com.mealstypes.model.MealsTypesVO;
 
 
 
-public class HibernateUtil_CompositeQuery_Emp3 {
+public class HibernateUtil_CompositeQuery_morningcode {
 
 	public static Predicate get_aPredicate_For_AnyDB(CriteriaBuilder builder, Root<MealsVO> root, String columnName, String value) {
 

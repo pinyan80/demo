@@ -9,7 +9,7 @@ public interface MealsRepository extends JpaRepository<MealsVO, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query(value="delate from meals where meals_id =?1", nativeQuery = true)
+	@Query(value="delete from meals where meals_id =?1", nativeQuery = true)
 	void deleteByMealsId(int mealsId);
 	
 }

@@ -17,10 +17,9 @@ import com.mealstypes.model.MealsTypesVO;
 
 @Entity
 @Table(name = "meals")
-public class MealsVO implements java.io.Serializable{
+public class MealsVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
 	private Integer mealsId;
 	private MealsTypesVO mealstypesVO;
 	private String mealsName;
@@ -29,10 +28,10 @@ public class MealsVO implements java.io.Serializable{
 	private Integer mealsControl;
 	private Integer mealsTotalScore;
 	private Integer mealsTotalPeople;
-	
-	//必需有一個不傳參數建構子
-	public MealsVO(){
-		
+
+	// 必需有一個不傳參數建構子
+	public MealsVO() {
+
 	}
 
 	@Id
@@ -47,9 +46,9 @@ public class MealsVO implements java.io.Serializable{
 	}
 
 	@ManyToOne
-	@JoinColumn(name="meals_types_id")
+	@JoinColumn(name = "meals_types_id")
 	public MealsTypesVO getMealstypesVO() {
-		return mealstypesVO;
+		return this.mealstypesVO;
 	}
 
 	public void setMealstypesVO(MealsTypesVO mealstypesVO) {
@@ -57,8 +56,8 @@ public class MealsVO implements java.io.Serializable{
 	}
 
 	@Column(name = "meals_name")
-	@NotEmpty(message="餐點名稱不能空白")
-	@Pattern(regexp="^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{1,20}$", message="餐點名稱:只能是中英文數字，且長度必須小於20")
+	@NotEmpty(message = "餐點名稱不能空白")
+	@Pattern(regexp = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{1,20}$", message = "餐點名稱:只能是中英文數字，且長度必須小於20")
 	public String getMealsName() {
 		return mealsName;
 	}
@@ -68,8 +67,7 @@ public class MealsVO implements java.io.Serializable{
 	}
 
 	@Column(name = "meals_price")
-	@NotEmpty(message="餐點價格:必須大於0")
-	@DecimalMin(value="0", message="餐點價格:不能小於{value}")
+	@DecimalMin(value = "0", message = "餐點價格:不能小於{value}")
 	public Integer getMealsPrice() {
 		return mealsPrice;
 	}
@@ -79,7 +77,7 @@ public class MealsVO implements java.io.Serializable{
 	}
 
 	@Column(name = "meals_description")
-	@Size(min=1,max=100,message="餐點描述必須在{min}到{max}之間")
+	@Size(min = 1, max = 100, message = "餐點描述必須在{min}到{max}之間")
 	public String getMealsDescription() {
 		return mealsDescription;
 	}
@@ -89,7 +87,6 @@ public class MealsVO implements java.io.Serializable{
 	}
 
 	@Column(name = "meals_control")
-	@Pattern(regexp="^[(0-1)]$",message="0:下架，1:上架")
 	public Integer getMealsControl() {
 		return mealsControl;
 	}

@@ -41,7 +41,7 @@ public class MealsService {
 	
 //	萬用複合查詢
 //	public List<MealsVO> getAll(Map<String, String[]> map){
-//		return HibernateUtil_CompositeQuery_Meals.getAll(map,sessionFactory.openSession());
+//		return HibernateUtil_CompositeQuery_morning.getAll(map,sessionFactory.openSession());
 //	}
 
 }

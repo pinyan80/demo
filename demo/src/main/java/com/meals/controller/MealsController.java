@@ -88,7 +88,7 @@ public class MealsController {
 
 	// 刪除
 	@PostMapping("delete")
-	public String delete(@RequestParam("meals_id") String mealsId, ModelMap model) {
+	public String delete(@RequestParam("mealsId") String mealsId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		/*************************** 2.開始刪除資料 *****************************************/
 
@@ -97,7 +97,7 @@ public class MealsController {
 		List<MealsVO> list = mealsSvc.getAll();
 		model.addAttribute("empListData", list);
 		model.addAttribute("success", "- (刪除成功)");
-		return "back-end/meals/listAllEmp"; // 刪除完成後轉交listAllEmp.html
+		return "back-end/meals/listAllMeals"; // 刪除完成後轉交listAllEmp.html
 	}
 
 	@ModelAttribute("mealstypesListData")
