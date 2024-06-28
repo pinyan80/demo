@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品收藏示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .product {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .favorite {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="products">
+    <div class="product" id="product1">
+        <h3>商品名稱：iPhone 12</h3>
+        <p>價格：$799.99</p>
+        <button onclick="toggleFavorite('product1')">收藏</button>
+    </div>
+    <div class="product" id="product2">
+        <h3>商品名稱：MacBook Pro</h3>
+        <p>價格：$1999.99</p>
+        <button onclick="toggleFavorite('product2')">收藏</button>
+    </div>
+</div>
+
+<script>
+    // 商品收藏狀態
+    var products = {
+        product1: { id: 1, name: 'iPhone 12', price: 799.99, isFavorite: false },
+        product2: { id: 2, name: 'MacBook Pro', price: 1999.99, isFavorite: false }
+    };
+
+    // 切換商品收藏狀態
+    function toggleFavorite(productId) {
+        var product = products[productId];
+        product.isFavorite = !product.isFavorite;
+        updateProductView(productId);
+    }
+
+    // 更新商品顯示狀態
+    function updateProductView(productId) {
+        var productElement = document.getElementById(productId);
+        var product = products[productId];
+
+        if (product.isFavorite) {
+            productElement.classList.add('favorite');
+            productElement.querySelector('button').textContent = '取消收藏';
+        } else {
+            productElement.classList.remove('favorite');
+            productElement.querySelector('button').textContent = '收藏';
+        }
+    }
+
+    // 初始化商品顯示
+    for (var productId in products) {
+        if (products.hasOwnProperty(productId)) {
+            updateProductView(productId);
+        }
+    }
+</script>
+
+</body>
+</html>
