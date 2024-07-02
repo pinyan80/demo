@@ -10,11 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface CollectRepository extends JpaRepository<CollectVO, Integer> {
 
 	@Transactional
-	@Query(value = "from CollectVO where memNo =?1 and favorite=false")
-	List<CollectVO> findAllFBymemNo(int memNo);
+	@Query(value = "from CollectVO where memNo=?1 and favorite=1")
+	List<CollectVO> findAllLikeByMemNo(int memNo);
 	
-	@Transactional
-	@Query(value = "from CollectVO where memNo =?1 and favorite=ture")
-	List<CollectVO> findAllTBymemNo(int memNO);
-
 }

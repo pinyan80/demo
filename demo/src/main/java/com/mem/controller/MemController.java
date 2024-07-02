@@ -133,4 +133,22 @@ public class MemController {
 				}
 				return result;
 			}
+			
+	//==include收藏店家=================== 
+//	@PostMapping("searchLikeStore")
+//	public String searchLikeStore(HttpServletRequest req,ModelMap model) {
+//		/***************************1.接收請求↑ ************************/
+//	System.out.println("收藏店家");
+//	Integer memNo = (Integer)(model.getAttribute("memNo"));
+//	/***************************2.查詢*********************************************/
+//	List<CollectVO> likeStoreListData = likeStoreSvc.getAllByCustomer(customerId,"L");
+//	if (likeStoreListData == null) {
+//		model.addAttribute("errorMessage", "無資料");
+//	return "cFunction/cEntrancePass";
+//	}
+//	/***************************3.顯示*****************/
+//	model.addAttribute("likeStoreListData", likeStoreListData); // for cEnrance.html
+//	model.addAttribute("searchLikeStore", "true"); // for cEnrance.html
+//	return "cFunction/cEntrancePass"; 	
+//	}
 }

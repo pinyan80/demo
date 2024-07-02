@@ -76,26 +76,6 @@ public class MemVO implements Serializable{
 	@Column(name ="mem_photo")
 //	@NotEmpty(message="照片: 請上傳照片") --> 由MemController.java 第60行處理錯誤信息
 	private byte[] upFiles; //修改 +get.set
-	
-	@ManyToMany
-	@JoinTable(
-			name = "collect",
-			joinColumns = @JoinColumn(name = "memNO"),
-			inverseJoinColumns = @JoinColumn(name = "mealsId")
-			)
-	@JsonIgnore
-	private Set<MealsVO> meals;
-	
-	
-	 public Set<MealsVO> getMeals() {
-		return meals;
-	}
-
-
-	public void setMeals(Set<MealsVO> meals) {
-		this.meals = meals;
-	}
-
 
 	public MemVO() {
 	        this.memUpdate = new Timestamp(System.currentTimeMillis());
@@ -169,7 +149,18 @@ public class MemVO implements Serializable{
 		this.upFiles = upFiles;
 	}
 	
-	
+//	多對多 collect
+//	@ManyToMany(mappedBy= "member")
+//	private Set<MealsVO> meals;
+//	
+//	@JsonIgnore
+//	public Set<MealsVO> getMeals() {
+//		return meals;
+//	}
+//
+//	public void setMeals(Set<MealsVO> meals) {
+//		this.meals = meals;
+//	}
 	
 	
 	

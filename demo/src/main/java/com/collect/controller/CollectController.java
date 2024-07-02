@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Validated
 @RequestMapping("/collect/collect")
-public class FavoriteController {
+public class CollectController {
 
 }

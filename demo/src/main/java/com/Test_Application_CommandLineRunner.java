@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.collect.model.CollectVO;
 import com.meals.model.MealsRepository;
 import com.meals.model.MealsVO;
 import com.mealstypes.model.MealsTypesVO;
@@ -35,8 +36,12 @@ public class Test_Application_CommandLineRunner implements CommandLineRunner {
     public void run(String...args) throws Exception {
 
     	//● 新增
-		MealsTypesVO mealstypesVO = new MealsTypesVO(); // 類別POJO
-		mealstypesVO.setMealsTypesId(1);
+    	CollectVO collectVO= new CollectVO();
+    	collectVO.setId(1);
+    	
+    	
+//		MealsTypesVO mealstypesVO = new MealsTypesVO(); // 類別POJO
+//		mealstypesVO.setMealsTypesId(1);
 
 //		MealsVO mealsVO1 = new MealsVO();
 //		mealsVO1.setMealsName("草莓吐司");

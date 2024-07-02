@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>所有分類資料 - listAllMealType.html</title>
-<script th:src="@{/js/jquery-1.11.3.min.js}"></script> <!-- 左側jquery為table分頁用 -->
-<head></head>
+<title>收藏資料 - listAllCollect.html</title>
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
 <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" /> <!-- ●●css for jquery datatables 用 -->
@@ -57,9 +57,9 @@ body {
 }
 </style>
 </head>
-<body >
+<body>
 
-<div th:fragment="listAllLikeStore-div">
+<div th:fragment="listAllCollect-div">
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		 </nav>
 
@@ -67,29 +67,22 @@ body {
   <thead >
 	<tr style="background-color:#CCCCFF">
 		<th>計數</th>
-		<th>分類編號</th>
-		<th>分類名稱</th>
-<!-- 		<th>修改</th> -->
+		<th>餐點名稱</th>
+
 	</tr>
   </thead>
 	
   <tbody>
-		<th:block th:each="likeStoreVO : ${likeStoreListData}">
+		<th:block th:each="collectVO : ${collectListData}">
 			<tr>
-				<td th:text="${likeStoreVOStat.count}">計數</td>
-				<td th:text="${likeStoreVO.id}">分類編號</td>
-				<td th:text="${likeStoreVO.likeUnlike}">分類名稱</td>
+				<td th:text="${collectVOStat.count}"></td>
+				<td th:text="${collectVO.mealsId}"></td>
 
-
-<!-- 				<td> -->
-<!-- 				  <form method="post" th:action="@{/mealtype/getOne_For_Update}" style="margin-bottom: 0px;"> -->
-<!-- 				     <input type="submit" value="修改"> -->
-<!-- 				     <input type="hidden" name="mealTypeNo" th:value="${mealTypeVO.mealTypeNo}"></form>			 -->
-<!-- 				</td> -->
 			</tr>
 		</th:block>
   </tbody>
 </table>
 </div>
+
 </body>
 </html>

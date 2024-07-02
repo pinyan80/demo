@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -50,19 +51,7 @@ public class MealsVO implements java.io.Serializable {
 		this.mealsId = mealsId;
 	}
 
-//manytomany
-	@ManyToMany(mappedBy= "meals")
-	private Set<MemVO> mem;
 	
-	@JsonIgnore
-	public Set<MemVO> getMem() {
-		return mem;
-	}
-
-	public void setMem(Set<MemVO> mem) {
-		this.mem = mem;
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "meals_types_id")
 	public MealsTypesVO getMealstypesVO() {
@@ -113,7 +102,7 @@ public class MealsVO implements java.io.Serializable {
 		this.mealsControl = mealsControl;
 	}
 
-	@Column(name = "meals_total_score")
+	@Column(name = "meals_total_score", updatable = false, insertable = false)
 	public Integer getMealsTotalScore() {
 		return mealsTotalScore;
 	}
@@ -122,7 +111,7 @@ public class MealsVO implements java.io.Serializable {
 		this.mealsTotalScore = mealsTotalScore;
 	}
 
-	@Column(name = "meals_total_people")
+	@Column(name = "meals_total_people", updatable = false, insertable = false)
 	public Integer getMealsTotalPeople() {
 		return mealsTotalPeople;
 	}
@@ -131,4 +120,22 @@ public class MealsVO implements java.io.Serializable {
 		this.mealsTotalPeople = mealsTotalPeople;
 	}
 
+	//manytomany
+//		@ManyToMany
+//		@JoinTable(
+//				name = "collect",
+//				joinColumns = @JoinColumn(name = "meals_id"),
+//				inverseJoinColumns = @JoinColumn(name = "mem_no")
+//				)
+//		@JsonIgnore
+//		private Set<MemVO> member;
+//		
+//		
+//		public Set<MemVO> getMember() {
+//			return member;
+//		}
+//
+//		public void setMember(Set<MemVO> member) {
+//			this.member = member;
+//		}
 }
