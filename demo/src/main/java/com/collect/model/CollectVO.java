@@ -19,7 +19,7 @@ public class CollectVO {
 
 	@Id
 	@Column(name = "mem_no")
-	@ManyToOne
+//	@ManyToOne
 	private Integer memNo;
 
 	@Id

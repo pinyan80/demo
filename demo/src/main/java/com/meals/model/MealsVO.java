@@ -1,11 +1,14 @@
 package com.meals.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
@@ -13,7 +16,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mealstypes.model.MealsTypesVO;
+import com.mem.model.MemVO;
 
 @Entity
 @Table(name = "meals")
@@ -43,6 +48,19 @@ public class MealsVO implements java.io.Serializable {
 
 	public void setMealsId(Integer mealsId) {
 		this.mealsId = mealsId;
+	}
+
+//manytomany
+	@ManyToMany(mappedBy= "meals")
+	private Set<MemVO> mem;
+	
+	@JsonIgnore
+	public Set<MemVO> getMem() {
+		return mem;
+	}
+
+	public void setMem(Set<MemVO> mem) {
+		this.mem = mem;
 	}
 
 	@ManyToOne
