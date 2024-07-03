@@ -149,19 +149,5 @@ public class MemVO implements Serializable{
 		this.upFiles = upFiles;
 	}
 	
-//	多對多 collect
-//	@ManyToMany(mappedBy= "member")
-//	private Set<MealsVO> meals;
-//	
-//	@JsonIgnore
-//	public Set<MealsVO> getMeals() {
-//		return meals;
-//	}
-//
-//	public void setMeals(Set<MealsVO> meals) {
-//		this.meals = meals;
-//	}
-	
-	
 	
 }

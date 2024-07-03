@@ -68,9 +68,9 @@ body {
 	<nav
 		class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		<div align="center">
-			<h2>所有餐點 - listAllMeals.html</h2>
+			<h2>所有餐點類別 - listAllMealsTypes.html</h2>
 			<h3>
-				<a class="navbar-brand" th:href="@{/meals/select_page}"><img
+				<a class="navbar-brand" th:href="@{/mealstypes/select_page}"><img
 					th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a>
 			</h3>
 		</div>
@@ -80,50 +80,26 @@ body {
 		<thead>
 			<tr style="background-color: #CCCCFF">
 				<th>計數</th>
-				<th>餐點編號</th>
 				<th>餐點類別編號</th>
-				<th>餐點名稱</th>
-				<th>價格</th>
-				<th>描述</th>
-				<th>控制</th>
-				<th>餐點評價總評分</th>
-				<th>餐點評價總人數</th>
-
-				<th>修改</th>
-				<th>刪除</th>
+				<th>餐點類別名稱</th>
+				
 
 			</tr>
 		</thead>
 
 		<tbody>
-			<th:block th:each="mealsVO : ${mealsListData}">
+			<th:block th:each="mealstypesVO : ${mealstypesListData}">
 				<tr>
-					<td th:text="${mealsVOStat.count}"></td>
-					<td th:text="${mealsVO.mealsId}"></td>
-					<td
-						th:text="${mealsVO.mealstypesVO.mealsTypesId} + '-[' + ${mealsVO.mealstypesVO.mealsTypesName} + ']'"></td>
-					<td th:text="${mealsVO.mealsName}"></td>
-					<td th:text="${mealsVO.mealsPrice}"></td>
-					<td th:text="${mealsVO.mealsDescription}"></td>
-					<td th:text="${mealsVO.mealsControl}"></td>
-					<td th:text="${mealsVO.mealsTotalScore}"></td>
-					<td th:text="${mealsVO.mealsTotalPeople}"></td>
-					<!-- 				<td th:text="${mealsVO.mealspicVO.mealsId} + '-[' + ${mealsVO.mealspicVO.mealsPic} + ']'"></td> -->
-
+					<td th:text="${mealstypesVOStat.count}"></td>
+					<td th:text="${mealstypesVO.mealsTypesId}"></td>
+					<td th:text="${mealstypesVO.mealsTypesName}"></td>
+					
 
 					<td>
-						<form method="post" th:action="@{/meals/getOne_For_Update}"
+						<form method="post" th:action="@{/mealstypes/getOne_For_Update}"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="修改"> <input type="hidden"
-								name="mealsId" th:value="${mealsVO.mealsId}">
-						</form>
-
-					</td>
-					<td>
-						<form method="post" th:action="@{/meals/delete}"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
-								name="mealsId" th:value="${mealsVO.mealsId}">
+								name="mealsTypesId" th:value="${mealstypesVO.mealsTypesId}">
 						</form>
 
 					</td>

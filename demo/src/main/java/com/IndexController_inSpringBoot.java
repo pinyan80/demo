@@ -23,7 +23,7 @@ import com.mealstypes.model.MealsTypesVO;
 public class IndexController_inSpringBoot {
 	
 	// @Autowired (●自動裝配)(Spring ORM 課程)
-	// 目前自動裝配了EmpService --> 供第66使用
+	
 	@Autowired
 	MealsService mealsSvc;
 	
@@ -34,8 +34,10 @@ public class IndexController_inSpringBoot {
     @Value("${welcome.message}")
     private String message;
 	
+    
+    
     private List<String> myList = Arrays.asList("Spring Boot Quickstart 官網 : https://start.spring.io", "IDE 開發工具", "直接使用(匯入)官方的 Maven Spring-Boot-demo Project + pom.xml", "直接使用官方現成的 @SpringBootApplication + SpringBootServletInitializer 組態檔", "依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf", "Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
-    @GetMapping("/")
+//    @GetMapping("/")
     public String index(Model model) {
     	model.addAttribute("message", message);
         model.addAttribute("myList", myList);
@@ -51,28 +53,40 @@ public class IndexController_inSpringBoot {
     }
     
   
-    //=========== 以下第63~75行是提供給 /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html 要使用的資料 ===================   
+    //=========== meals ===================   
     @GetMapping("/meals/select_page")
 	public String select_page(Model model) {
 		return "back-end/meals/select_page";
 	}
     
     @GetMapping("/meals/listAllMeals")
-	public String listAllEmp(Model model) {
+	public String listAllMeals(Model model) {
 		return "back-end/meals/listAllMeals";
 	}
     
     @ModelAttribute("mealsListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
-	protected List<MealsVO> referenceListData(Model model) {
+	protected List<MealsVO> referenceListData_meals(Model model) {
 		
     	List<MealsVO> list = mealsSvc.getAll();
 		return list;
 	}
     
-	@ModelAttribute("deptListData") // for select_page.html 第135行用
-	protected List<MealsTypesVO> referenceListData_MealsTypes(Model model) {
-		model.addAttribute("mealstypesVO", new MealsTypesVO()); // for select_page.html 第133行用
-		List<MealsTypesVO> list = mealstypesSvc.getAll();
+	
+	//============ mealstypes =======================
+	@GetMapping("/mealstypes/select_page")
+	public String select_page2(Model model) {
+		return "back-end/mealstypes/select_page";
+	}
+    
+    @GetMapping("/mealstypes/listAllMeals")
+	public String listAllMealsTypes(Model model) {
+		return "back-end/mealstypes/listAllMealsTypes";
+	}
+    
+    @ModelAttribute("mealstypesListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
+	protected List<MealsTypesVO> referenceListData_mealstypes(Model model) {
+		
+    	List<MealsTypesVO> list = mealstypesSvc.getAll();
 		return list;
 	}
 

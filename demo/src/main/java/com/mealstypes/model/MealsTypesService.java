@@ -17,6 +17,10 @@ public class MealsTypesService {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	public MealsTypesService(MealsTypesRepository repository) {
+		this.repository = repository;
+	}
+	
 	
 	public void addMealsTypes(MealsTypesVO mealstypesVO) {
 		repository.save(mealstypesVO);
@@ -26,10 +30,6 @@ public class MealsTypesService {
 		repository.save(mealstypesVO);
 	}
 	
-	public void deleteMealsTypes(Integer mealsTypesId) {
-		if(repository.existsById(mealsTypesId))
-			repository.deleteByMealsId(mealsTypesId);
-	}
 	
 	public MealsTypesVO getOneMealsTypes(Integer mealsTypesId) {
 		Optional<MealsTypesVO> optional = repository.findById(mealsTypesId);

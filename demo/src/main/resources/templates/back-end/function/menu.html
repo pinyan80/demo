@@ -1,0 +1,95 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>菜單</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+
+
+<script>
+	$(document)
+			.ready(
+					function() {
+						$('#example')
+								.DataTable(
+										{
+											"lengthMenu" : [ 3, 5, 10, 20, 50,
+													100 ],
+											"searching" : true, //搜尋功能, 預設是開啟
+											"paging" : true, //分頁功能, 預設是開啟
+											"ordering" : true, //排序功能, 預設是開啟
+											"language" : {
+												"processing" : "處理中...",
+												"loadingRecords" : "載入中...",
+												"lengthMenu" : "顯示 _MENU_ 筆結果",
+												"zeroRecords" : "沒有符合的結果",
+												"info" : "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+												"infoEmpty" : "顯示第 0 至 0 筆結果，共 0 筆",
+												"infoFiltered" : "(從 _MAX_ 筆結果中過濾)",
+												"infoPostFix" : "",
+												"search" : "搜尋:",
+												"paginate" : {
+													"first" : "第一頁",
+													"previous" : "上一頁",
+													"next" : "下一頁",
+													"last" : "最後一頁"
+												},
+												"aria" : {
+													"sortAscending" : ": 升冪排列",
+													"sortDescending" : ": 降冪排列"
+												}
+											}
+										});
+					});
+</script>
+<body>
+
+<th:block th:each="mealsVO : ${menuList}">
+			
+            <div class="section_item">
+                <div class="section_shadow">
+	                <div class="prd_card">        
+	                    <div class="prd_card_ing"><img class="card_img_top" th:src="@{/file/mealGifReader} + '?mealId=' + ${mealsVO.mealId}" alt="圖片載入中" /></div>           
+	                    <div class="prd_info">
+	                        <h2 th:text="${mealsVO.mealName}">商品名</h2>
+	                        <h3>售價: $<span th:text="${mealsVO.mealPrice}"></span></h3>                      
+	                    </div>  
+	                </div>
+	                <!-- 控制項 -->
+	                <div class="prd_card_footer">
+	                <form method="get" th:action="@{/Function/menu/meals}" >
+	                    <div class="quantity-container">
+	                        <h3>數量:</h3>
+	                        <button type="button"class="quantity-btn decrementQuantity">-</button>
+	                        <input type="number" class="quantity" th:id="${mealsVO.mealName}" name="quantity" value="1" min="1" max="99">
+	                        <button type="button"class="quantity-btn incrementQuantity">+</button>
+	                    </div>  
+	                   		
+	                
+		                    <input type="hidden" name="mealId" th:value="${mealsVO.mealName}">     
+		                    <button type="submit" id="buyit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+		                            加入購物車
+		                    </button>
+		               </form>
+	                </div>
+	                
+	            </div>
+            </div>
+</th:block>
+
+</body>
+</html>

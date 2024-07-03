@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Validated
-@RequestMapping("/collect/collect")
+@RequestMapping("/collect")
 public class CollectController {
 
 }

@@ -25,7 +25,7 @@ public class MealsTypesVO implements java.io.Serializable{
 
 	private Integer mealsTypesId;
 	private String mealsTypesName;
-	private Set<MealsVO> meals = new HashSet<MealsVO>();
+	private Set<MealsVO> mealsVO;
 	
 	public MealsTypesVO() {
 		
@@ -56,11 +56,11 @@ public class MealsTypesVO implements java.io.Serializable{
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="mealstypesVO")
 	@OrderBy("meals_types_id asc")
 	public Set<MealsVO> getMeals() {
-		return this.meals;
+		return mealsVO;
 	}
 
 	public void setMeals(Set<MealsVO> meals) {
-		this.meals = meals;
+		this.mealsVO = mealsVO;
 	}
 
 }
