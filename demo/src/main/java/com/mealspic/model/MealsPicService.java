@@ -25,13 +25,13 @@ public class MealsPicService {
 		repository.save(mealspicVO);
 	}
 	
-	public void deleteMealsPic(Integer mealsPicId) {
-		if(repository.existsById(mealsPicId))
-			repository.deleteById(mealsPicId);
+	public void deleteMealsPic(Integer mealPidId) {
+		if(repository.existsById(mealPidId))
+			repository.deleteById(mealPidId);
 	}
 	
-	public MealsPicVO getOneMealsPic(Integer mealsPicId) {
-		Optional<MealsPicVO> optional = repository.findById(mealsPicId);
+	public MealsPicVO getOneMealsPic(Integer mealPidId) {
+		Optional<MealsPicVO> optional = repository.findById(mealPidId);
 		return optional.orElse(null);
 	}
 	

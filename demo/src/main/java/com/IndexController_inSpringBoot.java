@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.collect.model.CollectService;
 import com.meals.model.MealsService;
 import com.meals.model.MealsVO;
+import com.mealspic.model.MealsPicService;
+import com.mealspic.model.MealsPicVO;
 import com.mealstypes.model.MealsTypesService;
 import com.mealstypes.model.MealsTypesVO;
 
@@ -29,6 +32,12 @@ public class IndexController_inSpringBoot {
 	
 	@Autowired
 	MealsTypesService mealstypesSvc;
+	
+	@Autowired
+	CollectService collectSvc;
+	
+	@Autowired
+	MealsPicService mealspicSvc;
 	
     // inject(注入資料) via application.properties
     @Value("${welcome.message}")
@@ -78,7 +87,7 @@ public class IndexController_inSpringBoot {
 		return "back-end/mealstypes/select_page";
 	}
     
-    @GetMapping("/mealstypes/listAllMeals")
+    @GetMapping("/mealstypes/listAllMealsTypes")
 	public String listAllMealsTypes(Model model) {
 		return "back-end/mealstypes/listAllMealsTypes";
 	}
@@ -89,5 +98,23 @@ public class IndexController_inSpringBoot {
     	List<MealsTypesVO> list = mealstypesSvc.getAll();
 		return list;
 	}
+    
+  //============ mealspic =======================
+  	@GetMapping("/mealspic/select_page")
+  	public String select_page3(Model model) {
+  		return "back-end/mealspic/select_page";
+  	}
+      
+    @GetMapping("/mealspic/listAllMealsPic")
+  	public String listAllMealsPic(Model model) {
+  		return "back-end/mealspic/listAllMealsPic";
+  	}
+      
+    @ModelAttribute("mealspicListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
+  	protected List<MealsPicVO> referenceListData_mealspic(Model model) {
+  		
+      	List<MealsPicVO> list = mealspicSvc.getAll();
+  		return list;
+  	}
 
 }

@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>餐點新增 - addEmp.html</title>
+<title>餐點修改 - update_meals_input.html</title>
 
 <head th:insert="~{/back-end/meals/included-fragment}"></head>
 <style type="text/css">
@@ -47,56 +47,39 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>餐點新增 - addMeals.html</h2>
+		 <div align="center"> <h2>餐點圖片修改 - update_mealspic_input.html</h2>
 		 <h3><a class="navbar-brand" th:href="@{/meals/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{insert}" method="post" th:object="${mealsVO}" enctype="multipart/form-data">
-			
-			
-			
-						
+		<form th:action="@{update}" method="post" th:object="${mealspicVO}" enctype="multipart/form-data">
 			<div>
-			<label>餐點類別:</label>
-			<select th:field="*{mealstypesVO.mealsTypesId}">
-				<option th:each="mealstypesVO : ${mealstypesListData}" th:value="${mealstypesVO.mealsTypesId}" th:text="${mealstypesVO.mealsTypesName}" />
-			</select>
-			<span th:if="${#fields.hasErrors('mealstypesVO.mealsTypesId')}" th:errors="*{mealstypesVO.mealsTypesId}" class="error" id="mealstypesVO.mealsTypesId.errors"></span>
-			</div>
-
-			<div>
-			<label>餐點名稱:</label>
-			<input type="text" th:field="*{mealsName}" onclick="hideContent('mealsName.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealsName')}" th:errors="*{mealsName}" class="error" id="mealsName.errors"></span>
+			<label>餐點圖片編號:</label>
+			<input type="text" th:field="*{mealspicId}" style="border:0px ; font-weight: bold;" readonly="readonly" /><br/>
 			</div>
 			
 			<div>
-			<label>餐點價格:</label>
-			<input type="text" th:field="*{mealsPrice}" onclick="hideContent('mealsPrice.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealsPrice')}" th:errors="*{mealsPrice}" class="error" id="mealsPrice.errors"></span>
+			<label>餐點圖片:</label>
+			<input type="text" th:field="*{mealPic}" onclick="hideContent('mealPic.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('mealPic')}" th:errors="*{mealPic}" class="error" id="mealPic.errors"></span>
 			</div>
 			
 			<div>
-			<label>餐點描述:</label>
-			<input type="text" th:field="*{mealsDescription}" onclick="hideContent('mealsDescription.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealsDescription')}" th:errors="*{mealsDescription}" class="error" id="mealsDescription.errors"></span>
+			<label>餐點圖片名稱:</label>
+			<input type="text" th:field="*{mealPicInfo}" onclick="hideContent('mealPicInfo.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('mealPicInfo')}" th:errors="*{mealPicInfo}" class="error" id="mealPicInfo.errors"></span>
 			</div>
-
+			
 			<div>
-			<label>餐點控制:</label>
-			<select th:field="*{mealsControl}">
-				<option value="1" th:selected="${mealsVO.mealsControl == 1}">1 上架</option>
-       	   	    <option value="0" th:selected="${mealsVO.mealsControl == 0}">0 下架</option>
-            </select><br/>
-			<span  th:if="${#fields.hasErrors('mealsControl')}" th:errors="*{mealsControl}" class="error" id="mealsControl.errors"></span>
+			<label>餐點編號:</label>
+			<span th:text="*{mealsVO.mealsId}" readonly></span>
+			<span th:if="${#fields.hasErrors('mealsVO.mealsId')}" th:errors="*{mealsVO.mealsId}" class="error" id="mealsVO.mealsId.errors"></span>
 			</div>
-				
-
+		
 			<div>
 				<div></div>
-				<div><button type="submit" id="submit"> 送出新增 </button></div>
+				<div><button type="submit" id="submit"> 送出修改 </button></div>
 				<div></div>
 			</div>		
 		</form>
@@ -111,7 +94,6 @@ function hideContent(d) {
      document.getElementById(d).style.display = "none";
 }
 
-<!-- 
 //照片上傳-預覽用
 var filereader_support = typeof FileReader != 'undefined';
 if (!filereader_support) {
@@ -154,7 +136,9 @@ function previewfile(file) {
 				+ "<br>" + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
 		document.getElementById('submit').disabled = true;
 	}
-}-->
+}
+
+
 </script>
 
 </body>

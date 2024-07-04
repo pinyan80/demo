@@ -68,7 +68,7 @@ body {
 	<nav
 		class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		<div align="center">
-			<h2>所有餐點類別 - listAllMealsTypes.html</h2>
+			<h2>所有餐點圖片 - listAllMealsPic.html</h2>
 			<h3>
 				<a class="navbar-brand" th:href="@{/meals/select_page}"><img
 					th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a>
@@ -80,27 +80,40 @@ body {
 		<thead>
 			<tr style="background-color: #CCCCFF">
 				<th>計數</th>
-				<th>餐點類別編號</th>
-				<th>餐點類別名稱</th>
+				<th>餐點圖片編號</th>
+				<th>餐點圖片</th>
+				<th>餐點圖片名稱</th>
+				<th>餐點編號</th>
+
 				<th>修改</th>
-				
+				<th>刪除</th>
 
 			</tr>
 		</thead>
 
 		<tbody>
-			<th:block th:each="mealstypesVO : ${mealstypesListData}">
+			<th:block th:each="mealspicVO : ${mealspicListData}">
 				<tr>
-					<td th:text="${mealstypesVOStat.count}"></td>
-					<td th:text="${mealstypesVO.mealsTypesId}"></td>
-					<td th:text="${mealstypesVO.mealsTypesName}"></td>
-					
+					<td th:text="${mealspicVOStat.count}"></td>
+					<td th:text="${mealspicVO.mealPicId}"></td>
+					<td th:text="${mealspicVO.mealPic}"></td>
+					<td th:text="${mealspicVO.mealPicInfo}"></td>
+					<td
+						th:text="${mealspicVO.mealsVO.mealsId} + '-[' + ${mealspicVO.mealsVO.mealsName} + ']'"></td>
 
 					<td>
-						<form method="post" th:action="@{/mealstypes/getOne_For_Update}"
+						<form method="post" th:action="@{/mealspic/getOne_For_Update}"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="修改"> <input type="hidden"
-								name="mealsTypesId" th:value="${mealstypesVO.mealsTypesId}">
+								name="mealPicId" th:value="${mealspicVO.mealPicId}">
+						</form>
+
+					</td>
+					<td>
+						<form method="post" th:action="@{/mealspic/delete}"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="刪除"> <input type="hidden"
+								name="mealPicId" th:value="${mealspicVO.mealPicId}">
 						</form>
 
 					</td>

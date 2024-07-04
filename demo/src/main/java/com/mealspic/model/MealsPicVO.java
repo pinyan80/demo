@@ -18,7 +18,7 @@ import com.meals.model.MealsVO;
 public class MealsPicVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Integer mealPidId;
+	private Integer mealPicId;
 	private byte[] mealPic;
 	private String mealPicInfo;
 	private MealsVO mealsVO;
@@ -30,12 +30,12 @@ public class MealsPicVO implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "meal_pic_id", updatable = false ,insertable = false)
-	public Integer getMealPidId() {
-		return mealPidId;
+	public Integer getMealPicId() {
+		return mealPicId;
 	}
 
-	public void setMealPidId(Integer mealPidId) {
-		this.mealPidId = mealPidId;
+	public void setMealPicId(Integer mealPicId) {
+		this.mealPicId = mealPicId;
 	}
 
 	@Column(name="meal_pic")

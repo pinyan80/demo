@@ -120,22 +120,4 @@ public class MealsVO implements java.io.Serializable {
 		this.mealsTotalPeople = mealsTotalPeople;
 	}
 
-	//manytomany
-//		@ManyToMany
-//		@JoinTable(
-//				name = "collect",
-//				joinColumns = @JoinColumn(name = "meals_id"),
-//				inverseJoinColumns = @JoinColumn(name = "mem_no")
-//				)
-//		@JsonIgnore
-//		private Set<MemVO> member;
-//		
-//		
-//		public Set<MemVO> getMember() {
-//			return member;
-//		}
-//
-//		public void setMember(Set<MemVO> member) {
-//			this.member = member;
-//		}
 }
