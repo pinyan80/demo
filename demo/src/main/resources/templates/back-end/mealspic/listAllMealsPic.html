@@ -90,13 +90,20 @@ body {
 
 			</tr>
 		</thead>
+		
+		<li><a href='addMealsPic'>ADD</a></li>
 
 		<tbody>
 			<th:block th:each="mealspicVO : ${mealspicListData}">
 				<tr>
 					<td th:text="${mealspicVOStat.count}"></td>
 					<td th:text="${mealspicVO.mealPicId}"></td>
-					<td th:text="${mealspicVO.mealPic}"></td>
+
+					
+					<td><img
+                                th:src="@{/mealspic/DBGifReader} + '?mealPicId=' + ${mealspicVO.mealPicId}"
+                                width="100px" height="100px"></td>
+					
 					<td th:text="${mealspicVO.mealPicInfo}"></td>
 					<td
 						th:text="${mealspicVO.mealsVO.mealsId} + '-[' + ${mealspicVO.mealsVO.mealsName} + ']'"></td>

@@ -2,15 +2,12 @@ package com.meals.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -48,6 +45,11 @@ public class MealsController {
 	public String insert(@Valid MealsVO mealsVO, BindingResult result, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		result = removeFieldError(mealsVO, result, "mealsId");
+
+		if (result.hasErrors()) {
+			return "back-end/meals/addMeals";
+		}
 
 		/*************************** 2.開始新增資料 *****************************************/
 
@@ -63,6 +65,7 @@ public class MealsController {
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("mealsId") String mealsId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		
 		/*************************** 2.開始查詢資料 *****************************************/
 
 		MealsVO mealsVO = mealsSvc.getOneMeals(Integer.valueOf(mealsId));
@@ -75,6 +78,11 @@ public class MealsController {
 	@PostMapping("update")
 	public String update(@Valid MealsVO mealsVO, BindingResult result, ModelMap model) throws IOException {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		result = removeFieldError(mealsVO, result, "mealsId");
+
+		if (result.hasErrors()) {
+			return "back-end/meals/update_meals_input";
+		}
 
 		/*************************** 2.開始修改資料 *****************************************/
 		mealsSvc.updateMeals(mealsVO);

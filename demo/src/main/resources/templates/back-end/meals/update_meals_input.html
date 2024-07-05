@@ -53,7 +53,7 @@
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{update}" method="post" th:object="${mealsVO}" enctype="multipart/form-data">
+		<form th:action="@{/meals/update}" method="post" th:object="${mealsVO}" enctype="multipart/form-data">
 			<div>
 			<label>餐點編號:</label>
 			<input type="text" th:field="*{mealsId}" style="border:0px ; font-weight: bold;" readonly="readonly" /><br/>

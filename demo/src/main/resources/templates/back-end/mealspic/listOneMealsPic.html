@@ -35,7 +35,11 @@
 	<div align="center" th:fragment="listOneMealsPic-div"> <!-- 此div被select_page.html第158行insert用 -->
 		<h3><span>查詢結果 :</span></h3>
 		<span>餐點圖片編號:</span><span th:text="${mealspicVO.mealPicId}"></span><br/>
-		<span>餐點圖片:</span><span th:text="${mealspicVO.mealPic}"></span><br/>
+		<span>餐點圖片:</span><img th:src="@{/mealspic/DBGifReader} + '?mealPicId=' + ${mealspicVO.mealPicId}"
+                                width="100px" height="100px"><br/>
+		
+		
+		
 		<span>餐點圖片名稱:</span><span th:text="${mealspicVO.mealPicInfo}"></span><br/>
 		<span>餐點編號:</span><span th:text="${mealspicVO.mealsVO.mealsId} + '-[' + ${mealspicVO.mealsVO.mealsName} + ']'"></span><br/>
 	</div>

@@ -1,25 +1,19 @@
 package com.meals.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mealstypes.model.MealsTypesVO;
-import com.mem.model.MemVO;
 
 @Entity
 @Table(name = "meals")
@@ -74,7 +68,8 @@ public class MealsVO implements java.io.Serializable {
 	}
 
 	@Column(name = "meals_price")
-	@DecimalMin(value = "0", message = "餐點價格:不能小於{value}")
+	@NotNull(message = "餐點價格不能空白")
+	@Min(value = 0, message = "餐點價格不能小於{value}")
 	public Integer getMealsPrice() {
 		return mealsPrice;
 	}
@@ -84,7 +79,7 @@ public class MealsVO implements java.io.Serializable {
 	}
 
 	@Column(name = "meals_description")
-	@Size(min = 1, max = 100, message = "餐點描述必須在{min}到{max}之間")
+	@NotEmpty(message = "餐點描述不能空白")
 	public String getMealsDescription() {
 		return mealsDescription;
 	}

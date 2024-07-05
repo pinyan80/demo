@@ -32,7 +32,7 @@ public class MealsTypesVO implements java.io.Serializable{
 	}
 
 	@Id
-	@Column(name="meals_types_id")
+	@Column(name="meals_types_id", updatable = false, insertable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getMealsTypesId() {
 		return mealsTypesId;
@@ -44,7 +44,7 @@ public class MealsTypesVO implements java.io.Serializable{
 
 	@Column(name="meals_types_name")
 	@NotEmpty(message="餐點類別名稱不能空白")
-	@Pattern(regexp="^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{1,10}$", message="餐點類別名稱:只能是中英文數字，且長度必須小於10")
+	@Pattern(regexp="^[\u4e00-\u9fa5a-zA-Z0-9]{1,10}$", message="餐點類別名稱:只能是中英文數字，且長度必須小於10")
 	public String getMealsTypesName() {
 		return mealsTypesName;
 	}

@@ -72,10 +72,11 @@
 			<span  th:if="${#fields.hasErrors('mealPicInfo')}" th:errors="*{mealPicInfo}" class="error" id="mealPicInfo.errors"></span>
 			</div>
 			
+			
 			<div>
 			<label>餐點圖片:</label>
-			<input type="text" th:field="*{mealPic}" onclick="hideContent('mealPic.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealPic')}" th:errors="*{mealPic}" class="error" id="mealPic.errors"></span>
+			<input type="file" th:field="*{mealPic}" onclick="previewImage()" multiple="multiple" />
+			<div id="blob_holder"><img th:src="@{/mealspic/DBGifReader} + '?mealPicId=' + ${mealspicVO.mealPicId}" width="100px"></div>
 			</div>	
 
 			<div>

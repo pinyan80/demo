@@ -56,13 +56,15 @@
 		<form th:action="@{update}" method="post" th:object="${mealspicVO}" enctype="multipart/form-data">
 			<div>
 			<label>餐點圖片編號:</label>
-			<input type="text" th:field="*{mealspicId}" style="border:0px ; font-weight: bold;" readonly="readonly" /><br/>
+			<input type="text" th:field="*{mealPicId}" style="border:0px ; font-weight: bold;" readonly="readonly" /><br/>
 			</div>
 			
 			<div>
 			<label>餐點圖片:</label>
-			<input type="text" th:field="*{mealPic}" onclick="hideContent('mealPic.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealPic')}" th:errors="*{mealPic}" class="error" id="mealPic.errors"></span>
+			<input type="file" th:field="*{mealPic}" onclick="previewImage()" multiple="multiple" />
+<!--             可以不修改圖片  -->
+            <span  th:if="${#fields.hasErrors('mealPic')}" th:errors="*{mealPic}" class="error" id="mealPic.errors"></span>
+			<div id="blob_holder"><img th:src="@{/mealspic/DBGifReader} + '?mealPicId=' + ${mealspicVO.mealPicId}" width="100px"></div>
 			</div>
 			
 			<div>
@@ -73,8 +75,7 @@
 			
 			<div>
 			<label>餐點編號:</label>
-			<span th:text="*{mealsVO.mealsId}" readonly></span>
-			<span th:if="${#fields.hasErrors('mealsVO.mealsId')}" th:errors="*{mealsVO.mealsId}" class="error" id="mealsVO.mealsId.errors"></span>
+			<input type="text" th:field="*{mealsVO.mealsId}" style="border:0px ; font-weight: bold;" readonly="readonly" /><br/>
 			</div>
 		
 			<div>

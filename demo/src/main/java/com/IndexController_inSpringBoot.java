@@ -116,5 +116,11 @@ public class IndexController_inSpringBoot {
       	List<MealsPicVO> list = mealspicSvc.getAll();
   		return list;
   	}
+    
+    //======== menu =============
+    @GetMapping("/function/menu")
+    public String menu(Model model) {
+    	return "back-end/function/menu";
+    }
 
 }
