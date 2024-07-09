@@ -81,6 +81,7 @@ public class MealsTypesController {
 
 
 		if (result.hasErrors()) {
+			model.addAttribute("mealstypesVO", mealstypesVO);
 			return "back-end/mealstypes/update_mealstypes_input";
 		}
 

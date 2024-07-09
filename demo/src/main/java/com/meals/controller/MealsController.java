@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -32,6 +36,9 @@ public class MealsController {
 
 	@Autowired
 	MealsTypesService mealstypesSvc;
+	
+	@Autowired
+    private EntityManager entityManager;
 
 	@GetMapping("addMeals")
 	public String addMeals(ModelMap model) {
@@ -125,11 +132,24 @@ public class MealsController {
 		return result;
 	}
 	
-//	public String listAllMeals(HttpServletRequest req, Model model) {
-//		Map<String, String[]> map = req.getParameterMap();
-//		List<MealsVO> list = mealsSvc.getAll(map);
-//		model.addAttribute("mealstypesListData", list); // for listAllEmp.html 第85行用
-//		return "back-end/meals/listAllEmp";
-//	}
+	// 每天4點執行一次更新 meals 表格的 meals_total_score 和 meals_total_people
+	@Scheduled(cron = "0 0 4 * * ?")
+	@Transactional
+	public void updateScore(ModelMap model) {
+		// 查詢 orddetails 表格中的 meals_score 欄位的平均值和總個數
+		Integer mealsnumber = mealsSvc.getmealsnumber();
+		
+		for(int i=1; i <= mealsnumber ; i++) {
+						
+			Double mealsavg = mealsSvc.getavgscore(i);
+			
+			if(mealsavg == null) {
+				continue;
+			}
+			
+			mealsSvc.updateMealsScore(mealsavg, i); // 更新 meals 實體
+		}
+
+	}
 
 }

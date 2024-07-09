@@ -38,10 +38,18 @@ public class MealsService {
 	public List<MealsVO> getAll(){
 		return repository.findAll();
 	}
-	
-//	萬用複合查詢
-//	public List<MealsVO> getAll(Map<String, String[]> map){
-//		return HibernateUtil_CompositeQuery_morning.getAll(map,sessionFactory.openSession());
-//	}
 
+//	個數
+	public Integer getmealsnumber() {
+		return repository.getmealsnumber();
+	}
+//	平均評價
+	public Double getavgscore(Integer mealsId) {
+		return repository.getavgscore(mealsId);
+	}
+//	更新meals表格
+	public void updateMealsScore(Double mealsTotalScore, Integer mealsId) {
+		repository.updateMealsScore(mealsTotalScore, mealsId);
+	}
+	
 }

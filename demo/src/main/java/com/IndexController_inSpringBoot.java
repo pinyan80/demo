@@ -118,9 +118,9 @@ public class IndexController_inSpringBoot {
   	}
     
     //======== menu =============
-    @GetMapping("/function/menu")
+    @GetMapping("/function/textmenu")
     public String menu(Model model) {
-    	return "back-end/function/menu";
+    	return "back-end/function/textmenu";
     }
 
 }

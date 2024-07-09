@@ -26,7 +26,7 @@ public class MealsVO implements java.io.Serializable {
 	private Integer mealsPrice;
 	private String mealsDescription;
 	private Integer mealsControl;
-	private Integer mealsTotalScore;
+	private Double mealsTotalScore;
 	private Integer mealsTotalPeople;
 
 	// 必需有一個不傳參數建構子
@@ -98,11 +98,11 @@ public class MealsVO implements java.io.Serializable {
 	}
 
 	@Column(name = "meals_total_score", updatable = false, insertable = false)
-	public Integer getMealsTotalScore() {
+	public Double getMealsTotalScore() {
 		return mealsTotalScore;
 	}
 
-	public void setMealsTotalScore(Integer mealsTotalScore) {
+	public void setMealsTotalScore(Double mealsTotalScore) {
 		this.mealsTotalScore = mealsTotalScore;
 	}
 

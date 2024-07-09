@@ -40,6 +40,7 @@ public class Test_Application_CommandLineRunner implements CommandLineRunner {
     	collectVO.setId(1);
     	
     	
+    	
 //		MealsTypesVO mealstypesVO = new MealsTypesVO(); // 類別POJO
 //		mealstypesVO.setMealsTypesId(1);
 
