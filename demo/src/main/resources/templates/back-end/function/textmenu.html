@@ -29,8 +29,7 @@
 						$('#example')
 								.DataTable(
 										{
-											"lengthMenu" : [ 3, 5, 10, 20, 50,
-													100 ],
+											"lengthMenu" : [ 5, 10, 20],
 											"searching" : true, //搜尋功能, 預設是開啟
 											"paging" : true, //分頁功能, 預設是開啟
 											"ordering" : true, //排序功能, 預設是開啟
@@ -71,7 +70,7 @@ body {
 	<nav
 		class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		<div align="center">
-			<h2>所有餐點 - listAllMeals.html</h2>
+			<h2>菜單</h2>
 			
 <!-- 			可以改為回主畫面 -->
 <!-- 			<h3> -->
@@ -87,35 +86,29 @@ body {
 		<thead>
 			<tr style="background-color: #CCCCFF">
 
-				<th>餐點編號</th>
-<!-- 				<th>餐點類別編號</th> -->
 				<th>餐點名稱</th>
 				<th>價格</th>
 				<th>描述</th>
-				
-
+				<th>圖片</th>
 				<th>餐點評價總評分</th>
-				<th>餐點評價總人數</th>
 				<th>加入購物車</th>
-				<th>加入最愛</th>
-				
-				
+				<th>加入最愛</th>				
 			</tr>
 		</thead>
 
 		<tbody>
-			<th:block th:each="mealsVO : ${mealsListData}">
+			<th:block th:each="mealsVO,iterStat : ${mealsListData}">
+			
 				<tr>
 
-					<td th:text="${mealsVO.mealsId}"></td>
-<!-- 					<td -->
-<!-- 						th:text="${mealsVO.mealstypesVO.mealsTypesId} + '-[' + ${mealsVO.mealstypesVO.mealsTypesName} + ']'"></td> -->
 					<td th:text="${mealsVO.mealsName}"></td>
 					<td th:text="${mealsVO.mealsPrice}"></td>
 					<td th:text="${mealsVO.mealsDescription}"></td>
-
+<!-- 					<td><img -->
+<!--                                 th:src="@{/mealspic/DBGifReader(mealPicId=${mealspicListData[iterStat.index].mealPicId})}" -->
+<!--                                 width="100px" height="100px"></td> -->
+                                
 					<td th:text="${mealsVO.mealsTotalScore}"></td>
-					<td th:text="${mealsVO.mealsTotalPeople}"></td>
 					
 <!-- **還要改購物車路徑 -->
 					<td>
@@ -129,10 +122,12 @@ body {
 					
 <!-- 加入最愛 -->
 					<td>
-						<form method="post" th:action="@{/meals/getOne_For_Update}"
+						<form method="post" th:action="@{/collect/updateFavorite}"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="加入最愛"> <input type="hidden"
-								name="mealsId" th:value="${mealsVO.mealsId}">
+							<input type="submit" value="加入最愛"> 
+<!-- 							<input type="hidden" name="memNo" th:value="${memVO.memNo}"> -->
+<!-- 							<input type="hidden" name="mealsId" th:value="${mealsVO.mealsId}"> -->
+<!-- 							<input type="hidden" name="favorite" value="1"> -->
 						</form>
 
 					</td>

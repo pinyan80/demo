@@ -69,7 +69,7 @@ public class MealsPicController {
 		List<MealsPicVO> list = mealspicSvc.getAll();
 		model.addAttribute("mealspicListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/mealspic/listAllMealsPic";
+		return "back-end/mealspic/listAllMealsPic";
 	}
 
 	// 修改

@@ -1,9 +1,6 @@
 package com;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +8,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.collect.model.CollectVO;
 import com.meals.model.MealsRepository;
+import com.meals.model.MealsService;
 import com.meals.model.MealsVO;
-import com.mealstypes.model.MealsTypesVO;
-
-import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_morningcode;
 
 
 @SpringBootApplication
@@ -24,6 +18,9 @@ public class Test_Application_CommandLineRunner implements CommandLineRunner {
     
 	@Autowired
 	MealsRepository repository ;
+	
+	@Autowired
+	MealsService mealsSvc;
 	
 	@Autowired
     private SessionFactory sessionFactory;
@@ -36,8 +33,8 @@ public class Test_Application_CommandLineRunner implements CommandLineRunner {
     public void run(String...args) throws Exception {
 
     	//● 新增
-    	CollectVO collectVO= new CollectVO();
-    	collectVO.setId(1);
+//    	MealsVO mealsVO= new MealsVO();
+//    	mealsVO.set(1);
     	
     	
     	
@@ -71,8 +68,26 @@ public class Test_Application_CommandLineRunner implements CommandLineRunner {
 //		System.out.println("--------------------------------");
 
     	//● 查詢-findByPrimaryKey (多方emp2.hbm.xml必須設為lazy="false")(優!)
-//    	Optional<MealsVO> optional = repository.findById(3);
+    	
+    
+    	
+//    	Optional<MealsVO> optional = repository.findById(4);
 //		MealsVO mealsVO3 = optional.get();
+		
+//		Integer mealsnumber = mealsSvc.getmealsnumber();
+//		for(int i=1; i <= mealsnumber ; i++) {
+//
+//			Double mealsavg = mealsSvc.getavgscore(i);
+//			System.out.println(mealsavg);
+//			
+//			if(mealsavg == null) {
+//				System.out.println("123");
+//				continue;
+//			}
+//			System.out.println(i);
+//			mealsSvc.updateMealsScore(mealsavg, i); // 更新 meals 實體
+		
+		
 //		System.out.print(mealsVO3.getMealsId() + ",");
 //		System.out.print(mealsVO3.getMealsName() + ",");
 //		System.out.print(mealsVO3.getMealsPrice() + ",");

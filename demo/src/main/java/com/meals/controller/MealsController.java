@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +34,6 @@ public class MealsController {
 
 	@Autowired
 	MealsTypesService mealstypesSvc;
-	
-	@Autowired
-    private EntityManager entityManager;
 
 	@GetMapping("addMeals")
 	public String addMeals(ModelMap model) {
@@ -132,10 +127,10 @@ public class MealsController {
 		return result;
 	}
 	
-	// 每天4點執行一次更新 meals 表格的 meals_total_score 和 meals_total_people
-	@Scheduled(cron = "0 0 4 * * ?")
+	// 每天每一個小時(第0秒整點)執行一次更新 meals 表格的 meals_total_score
+	@Scheduled(cron = "0 0 * * * *")
 	@Transactional
-	public void updateScore(ModelMap model) {
+	public void updateScore() {
 		// 查詢 orddetails 表格中的 meals_score 欄位的平均值和總個數
 		Integer mealsnumber = mealsSvc.getmealsnumber();
 		
