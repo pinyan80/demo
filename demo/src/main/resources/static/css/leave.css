@@ -1,0 +1,174 @@
+body {
+    font-family:Arial, sans-serif;
+	background-color: #fcfcfc;
+}
+
+.form{
+    display:inline;
+
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    
+}
+
+.tab-button {
+    color: #bebcbc;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    cursor: pointer;
+    border: 1px solid #f1f1f1;
+    background-color: #e6e6e6;
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab-button.active {
+    background-color: #ffff;
+    color: rgba(0, 0, 0, 0.808);
+}
+
+.tab-content .tab-pane {
+    display: none;
+}
+
+.tab-content .tab-pane.active {
+    display: block;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px; 
+    font-size: 32px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+    float: right;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+}
+
+.filter-group label {
+    margin-right: 10px;
+}
+
+.filter-group input, .filter-group select, .filter-group button {
+    margin-right: 10px;
+    padding: 5px;
+    
+}
+
+.buttons {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+
+}
+/*撤回 不同意*/
+.submit, .submireject {
+    background-color: #BF242A;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+    min-width: 90px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+
+}
+.submit:hover, .submireject:hover  {
+    background-color: #dd4850;
+
+}
+/*詳情 */
+.detail-button{
+	background-color: #b9b9b9;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+    min-width: 90px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+	
+}
+.detail-button:hover {
+    background-color: #c9c9c9;
+
+}
+/*同意 */
+.submitagree{
+	background-color: #2374ab;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+    min-width: 90px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+	
+}
+.submitagree:hover {
+    background-color: #62addf;
+
+}
+
+/*填寫假單 */
+.morandi-style {
+    background-color: #CA774B; 
+    color: white;
+    border: none;
+    padding: 10px 15px; 
+    margin-right: 5px; 
+    cursor: pointer; 
+    min-width: 100px; 
+    border-radius: 5px;
+    font-size: 16px; 
+    font-weight: bold; 
+    display: inline-block; 
+    text-align: center;
+    text-decoration: none; 
+}
+
+.morandi-style:hover {
+    background-color: #b08a8a; 
+}
+
+
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+.schedule-table th, .schedule-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+
+}
+
+
+.schedule-table th {
+    background-color: #f2f2f2;
+}
+
+table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting_asc_disabled, table.dataTable thead>tr>th.sorting_desc_disabled, table.dataTable thead>tr>td.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting_asc_disabled, table.dataTable thead>tr>td.sorting_desc_disabled {
+
+    text-align: center;
+}
