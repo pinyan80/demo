@@ -1,0 +1,252 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>員工資料新增</title>
+<link rel="stylesheet" th:href="@{/css/index3.css}">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<head th:insert="~{/back-end/emp/included-fragment}"></head>
+<style type="text/css">
+.right-pane {
+	width: 77%;
+	margin-right: 20px;
+	text-align: center;
+}
+.container {
+	max-width: 600px;
+	margin: 20px auto 50px;
+	padding: 20px;
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+	text-align: center;
+	color: #333;
+}
+
+h3 {
+	font-size: 1.2rem;
+}
+
+form {
+	display: grid;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+	color: #666;
+}
+.btn {
+	width: 100%;
+	padding: 12px;
+	margin-top: 10px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	background-color: #88bbb0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color: #60a495;
+}
+
+select, input {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	box-shadow: inset 1px -1px 2px 0px rgba(0, 0, 0, 0.1);
+}
+input[type=text], input[type=password], select, textarea {
+	width: 560px;
+	box-sizing: border-box;
+	transition: all 0.2s ease-in-out;
+	appearance: none;
+	-webkit-appearance: none;
+}
+	
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+.error {
+	color: red; 
+}
+
+
+
+
+</style>
+</head>
+<body>
+	<div class="main-container">
+		<div th:replace="fragments/back-end-header-items :: sidebar1"></div>
+		<div class="right-pane">
+
+
+		 <div align="center"> <h1>MorningCode 員工資料新增</h1>
+			<div class="container">
+
+
+		<h3><b>所有欄位皆為必填欄位</b></h3>
+		<form th:action="@{insert}" method="post" th:object="${empVO}" enctype="multipart/form-data">
+			
+			
+			
+			
+			
+			
+			<div>
+			<label>員工姓名:</label>
+			<input type="text" th:field="*{empName}" onclick="hideContent('empName.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}" class="error" id="empName.errors"></span>
+			</div>
+			
+			<div>
+			<label>員工帳號:</label>
+			<input type="text" th:field="*{empAccount}" onclick="hideContent('empAccount.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empAccount')}" th:errors="*{empAccount}" class="error" id="empAccount.errors"></span>
+			</div>
+			
+			<div>
+			<label>員工密碼:</label>
+			<input type="text" th:field="*{empPassword}" onclick="hideContent('empPassword.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empPassword')}" th:errors="*{empPassword}" class="error" id="empPassword.errors"></span>
+			</div>
+			
+			<div>
+			<label>員工email:</label>
+			<input type="text" th:field="*{empEmail}" onclick="hideContent('empEmail.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}" class="error" id="empEmail.errors"></span>
+			</div>
+			
+			<div>
+			<label>員工地址:</label>
+			<input type="text" th:field="*{empAddress}" onclick="hideContent('empAddress.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empAddress')}" th:errors="*{empAddress}" class="error" id="empAddress.errors"></span>
+			</div>
+			
+			<div>
+			<label>員工電話:</label>
+			<input type="text" th:field="*{empPhone}" onclick="hideContent('empPhone.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}" class="error" id="empPhone.errors"></span>
+			</div>
+			
+			<div>
+			<label>雇用日期:</label>
+			<input type="date" th:field="*{empHiredate}" onclick="hideContent('empHiredate.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('empHiredate')}" th:errors="*{empHiredate}" class="error" id="empHiredate.errors"></span>
+			</div>
+			
+				<div>
+			<label>照片:</label>
+			<input type="file" th:field="*{upFiles}" onclick="previewImage()" multiple="multiple" onchange="hideContent('upFiles.errors');" />
+<!-- 			<span  th:if="${#fields.hasErrors('upFiles')}" th:errors="*{upFiles}" class="error" id="upFiles.errors"></span> -->
+			<span class="error" th:utext="${errorMessage}" id="upFiles.errors">${errorMessage}</span>
+<!-- 			<h2 id="errorMessage">${errorMessage}</h2>  -->
+			<div id="blob_holder"></div>
+			</div>
+			
+		
+			
+
+			
+			<div>
+				<div></div>
+				<div><button type="submit" class="btn"> 送出新增 </button></div>
+				<div></div>
+			</div>		
+		</form>
+	
+	</div>
+	</div>
+	</div>
+</div>
+
+
+<!-- JavaScript part -->
+<script type="text/javascript">
+
+//清除提示信息,沒設定 做錯訊息不會消失
+
+function hideContent(d) {
+     document.getElementById(d).style.display = "none";
+}
+
+//照片上傳-預覽用
+var filereader_support = typeof FileReader != 'undefined';
+if (!filereader_support) {
+	alert("No FileReader support");
+}
+acceptedTypes = {
+		'image/png' : true,
+		'image/jpeg' : true,
+		'image/gif' : true
+};
+function previewImage() {
+	var upfile1 = document.getElementById("upFiles");
+	upfile1.addEventListener("change", function(event) {
+		var files = event.target.files || event.dataTransfer.files;
+		for (var i = 0; i < files.length; i++) {
+			previewfile(files[i])
+		}
+	}, false);
+}
+function previewfile(file) {
+	if (filereader_support === true && acceptedTypes[file.type] === true) {
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			var image = new Image();
+			image.src = event.target.result;
+			image.width = 100;
+			image.height = 75;
+			image.border = 2;
+			if (blob_holder.hasChildNodes()) {
+				blob_holder.removeChild(blob_holder.childNodes[0]);
+			}
+			blob_holder.appendChild(image);
+		};
+		reader.readAsDataURL(file);
+		document.getElementById('submit').disabled = false;
+	} else {
+		blob_holder.innerHTML = "<div  style='text-align: left;'>" + "● filename: " + file.name
+				+ "<br>" + "● ContentTyp: " + file.type
+				+ "<br>" + "● size: " + file.size + "bytes"
+				+ "<br>" + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+		document.getElementById('submit').disabled = true;
+	}
+}
+</script>   
+	<script>
+		$("a.aa").on("click", function() {
+			var $li = $(this).closest("li");
+			$li.find("div.menu-item-1").slideToggle();
+			$li.siblings().find(".menu-item-1").slideUp();
+		});
+		function redirectTo(url) {
+			window.location.href = url;
+		}
+	</script>
+
+</body>
+</html>

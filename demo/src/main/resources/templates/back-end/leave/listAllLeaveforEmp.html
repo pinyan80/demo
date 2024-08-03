@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>MorningCode 請假紀錄.html</title>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+
+
+<link rel="stylesheet" th:href="@{/css/leave.css}" />
+<link rel="stylesheet" th:href="@{/css/index3.css}">
+<script th:src="@{/js/leave.js}"></script>
+
+<style type="text/css">
+.right-pane {
+	width: 77%;
+	margin-right: 20px;
+	text-align: center;
+}
+
+.dataTables_wrapper .dataTables_filter {
+	margin-bottom: 10px;
+}
+
+.button-container {
+	text-align: right;
+	padding-top: 10px;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+	padding-top: 60px;
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 5% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.swal2-popup {
+    width: auto !important;
+    max-width: 90% !important; /* 设置一个最大宽度 */
+}
+.detail-button{
+
+
+}
+</style>
+</head>
+<body>
+
+	<div class="main-container">
+		<div th:replace="fragments/back-end-header-items :: sidebar1"></div>
+		<!-- 分頁切換按鈕 -->
+		<div class="right-pane">
+
+			<h1>MorningCode 請假紀錄</h1>
+			<div class="button-container">
+				<a href="addLeave" class="morandi-style">+ 填寫假單</a>
+			</div>
+
+			<div class="tabs">
+				<button class="tab-button active" data-tab="pending">待審核</button>		
+				<button class="tab-button" data-tab="approved">審核通過</button>
+				<button class="tab-button" data-tab="rejected">不通過</button>
+				<button class="tab-button" data-tab="all">所有紀錄</button>
+				<button class="tab-button" data-tab="forEmp">代班簽核</button>
+			</div>
+			<div class="tab-content">
+				<!-- 待審核內容 -->
+				<div class="tab-pane active" id="pending">
+					<table class="schedule-table">
+						<thead>
+							<tr>
+								<th>申請日期</th>
+								<th>請假員工</th>
+								<th>請假日期</th>
+								<th>代班員工</th>
+								<th>核准日期</th>
+								<th>簽核進度</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="leaveVO : ${leaveListData}">
+								<th:block th:if="${leaveVO.leaveStatus == 0}">
+									<tr>
+										<td th:text="${leaveVO.leaveFilingdate}"></td>
+										<td th:text="${leaveVO.leaveEmpId.empName}"></td>
+										<td th:text="${leaveVO.leaveDate}"></td>
+										<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
+										<td th:text="${leaveVO.leaveApprovaldate}"></td>
+										<td>
+											<button class="detail-button" th:data-leave-id="${leaveVO.leaveId}">詳情</button>
+										</td>
+										<td>
+											<form method="post" th:action="@{/back-end/leave/delete}" style="margin-bottom: 0px;">
+												<input class="submit" type="submit" value="撤回"> 
+												<input type="hidden" name="leaveId" th:value="${leaveVO.leaveId}">
+											</form>
+											
+										</td>
+									</tr>
+								</th:block>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- 審核通過內容 -->
+				<div class="tab-pane" id="approved">
+					<table class="schedule-table">
+						<thead>
+							<tr>
+								<th>申請日期</th>
+								<th>請假員工</th>
+								<th>請假日期</th>
+								<th>代班員工</th>
+								<th>核准日期</th>
+								<th>核准狀態</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="leaveVO : ${leaveListData}">
+								<th:block th:if="${leaveVO.leaveStatus == 1}">
+									<tr>
+										<td th:text="${leaveVO.leaveFilingdate}"></td>
+										<td th:text="${leaveVO.leaveEmpId.empName}"></td>
+										<td th:text="${leaveVO.leaveDate}"></td>
+										<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
+										<td th:text="${leaveVO.leaveApprovaldate}"></td>
+										<td th:text="'審核通過'"></td>
+										
+									</tr>
+								</th:block>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- 不通過內容 -->
+				<div class="tab-pane" id="rejected">
+					<table class="schedule-table">
+						<thead>
+							<tr>
+								<th>申請日期</th>
+								<th>請假員工</th>
+								<th>請假日期</th>
+								<th>代班員工</th>
+								<th>核准日期</th>
+								<th>核准狀態</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="leaveVO : ${leaveListData}">
+								<th:block th:if="${leaveVO.leaveStatus == 2}">
+									<tr>
+										<td th:text="${leaveVO.leaveFilingdate}"></td>
+										<td th:text="${leaveVO.leaveEmpId.empName}"></td>
+										<td th:text="${leaveVO.leaveDate}"></td>
+										<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
+										<td th:text="${leaveVO.leaveApprovaldate}"></td>
+										<td th:text="'審核不通過'"></td>
+										
+									</tr>
+								</th:block>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- 所有紀錄內容 -->
+				<div class="tab-pane" id="all">
+					<table class="schedule-table">
+						<thead>
+							<tr>
+								<th>申請日期</th>
+								<th>請假員工</th>
+								<th>請假日期</th>
+								<th>代班員工</th>
+								<th>核准日期</th>
+								<th>核准狀態</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="leaveVO : ${leaveListData}">
+								<tr>
+									<td th:text="${leaveVO.leaveFilingdate}"></td>
+									<td th:text="${leaveVO.leaveEmpId.empName}"></td>
+									<td th:text="${leaveVO.leaveDate}"></td>
+									<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
+									<td th:text="${leaveVO.leaveApprovaldate}"></td>
+									<td>
+										<span th:switch="${leaveVO.leaveStatus}"> 
+											<span th:case="0">未審核</span> 
+												<span th:case="1">審核通過</span> 
+											<span th:case="2">審核不通過</span>
+										</span>
+									</td>
+									
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane" id="forEmp">
+				<form method="post" th:action="@{/back-end/leave/updateapproval}">
+				<input type="hidden" name="isSubstituteApproval" value="true">
+					<table class="schedule-table">
+						<thead>
+							<tr>
+								<th>申請日期</th>
+								<th>請假員工</th>
+								<th>請假日期</th>
+								<th>代班員工</th>
+								<th>簽核狀態</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="leaveVO : ${leaveListForAssignee}">
+							<th:block th:if="${leaveVO.leaveStatusforEmp == 0}">
+								<tr>
+									<td th:text="${leaveVO.leaveFilingdate}"></td>
+									<td th:text="${leaveVO.leaveEmpId.empName}"></td>
+									<td th:text="${leaveVO.leaveDate}"></td>
+									<td th:text="${leaveVO.leaveAssigneeId.empName}"></td>
+									<td>
+		                                <button class="submitagree" type="submit" name="leaveStatusforEmp" value="1">同意</button>
+		                                <button class="submireject" type="submit" name="leaveStatusforEmp" value="2">不同意</button>
+		                                <input type="hidden" name="leaveId" th:value="${leaveVO.leaveId}">
+		                            </td>
+
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="detailModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<table>
+				<tr>
+					<th>申請請假時間</th>
+					<th>代班員工簽核</th>
+					<th>主管簽核</th>
+				</tr>
+				<tr>
+					<td id="leaveDate"></td>
+					<td id="assigneeApproval"></td>
+					<td id="managerApproval"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			var table = $('.schedule-table').DataTable({
+				"order" : [ [ 0, "desc" ] ],
+				"language" : {
+					"lengthMenu" : "每頁顯示 _MENU_ 筆記錄",
+					"zeroRecords" : "沒有找到記錄",
+					"info" : "顯示第 _PAGE_ 頁，共 _PAGES_ 頁",
+					"infoEmpty" : "無可用記錄",
+					"infoFiltered" : "(從 _MAX_ 筆記錄中過濾)",
+					"search" : "搜尋:",
+					"paginate" : {
+						"first" : "第一頁",
+						"last" : "最後一頁",
+						"next" : "下一頁",
+						"previous" : "上一頁"
+					}
+				}
+			});
+
+			// 控制分頁顯示
+			$('.tab-button').on('click', function() {
+				var tab = $(this).data('tab');
+				$('.tab-pane').removeClass('active');
+				$('#' + tab).addClass('active');
+
+				// 重新繪製表格
+				table.draw();
+			});
+
+			// 初始化顯示第一個分頁
+			$('.tab-button[data-tab="pending"]').click();
+
+			// 詳情按鈕點擊事件
+			$('.detail-button').on('click', function() {
+			    var leaveId = $(this).data('leave-id');
+			    detailModal(leaveId);
+			});
+
+			function detailModal(leaveId) {
+			    $.get("/back-end/leave/getDetails", { leaveId: leaveId })
+			        .done(function(leaveVO) {
+			            if (leaveVO) {
+			                const formattedDate = moment(leaveVO.leaveFilingdate).format('YYYY-MM-DD HH:mm:ss');
+			                Swal.fire({
+			                    title: '簽核進度',
+			                    html: `<table class="detailtable">
+			                            <tr>
+			                                <th style="width: 150px;">申請時間</th>
+			                                <th style="width: 100px;"></th>
+			                                <th style="width: 120px;">代班員工簽核</th>
+			                                <th style="width: 100px;"></th>
+			                                <th style="width: 120px;">主管簽核</th>
+			                            </tr>
+			                            <tr>
+			                                <td>${formattedDate}</td>
+			                                <td><img src="/images/loading2.gif" alt="Loading" style="width:90px;"/></td>
+			                                <td>${leaveVO.leaveStatusforEmp == 1 ? '同意' : leaveVO.leaveStatusforEmp == 2 ? '不同意' : ''}</td>
+			                                <td>${leaveVO.leaveStatusforEmp == 1 ? '<img src="/images/loading2.gif" alt="Loading" style="width:90px;"/>' : ''}</td>
+			                                <td>${leaveVO.leaveStatus == 1 ? '審核通過' : leaveVO.leaveStatus == 2 ? '審核不通過' : ''}</td>
+			                            </tr>
+			                          </table>`,
+			                          showCancelButton: false,
+			                          confirmButtonText: 'Close',
+			                          customClass: {
+			                              popup: 'swal2-popup'
+			                          }
+			                })
+			            }
+			        });
+			}
+
+
+
+			// 點擊模態框外部關閉
+			$(window).on('click', function(event) {
+				if ($(event.target).is('#detailModal')) {
+					$('#detailModal').hide();
+				}
+			});
+			
+			$("a.aa").on("click", function() {
+			    console.log(this);
+			    var $li = $(this).closest("li");
+			    $li.find("div.menu-item-1").slideToggle();
+			    $li.siblings().find(".menu-item-1").slideUp();
+			});
+
+			function redirectTo(url) {
+			    window.location.href = url;
+			}
+		});
+		
+	</script>
+</body>
+</html>

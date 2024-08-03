@@ -1,120 +1,269 @@
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>餐點修改 - update_meals_input.html</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>餐點修改</title>
 
-<head th:insert="~{/back-end/meals/included-fragment}"></head>
-<style type="text/css">
-	
-	button {
-		padding: 5px;
-	}
-	form {
-		display: table;
-	}
-	form div {
-		display: table-row;
-	}
-	label, input, span, select {
-		display: table-cell;
-		margin: 5px;
-		text-align: left;		
-	}
-	input[type=text], input[type=password], select, textarea {
-		width: 200px;
-		margin: 5px;
-	}
-	form div div {
-		display: table-cell;
-	}
-	.center {
-        margin-left: auto;
-        margin-right: auto;
-    }
+
+<!-- dataTables -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<!-- dataTables -->
+
+<style>
+body {
+	background-color: #8BC34A; /* 草綠色背景 */
+}
+
+.right-pane {
+	width: calc(100% -21%); /* 調整頁面寬度 */
+	margin: 20px auto; /* 水平居中 */
+	background-color: #fff; /* 右側內容區域背景色 */
+	padding: 20px; /* 內邊距 */
+	border-radius: 10px; /* 圓角邊框 */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 陰影 */
+}
+
+h2, h3 {
+	text-align: center; /* 標題居中 */
+}
+
+img.small {
+	width: 40px;
+	height: 40px;
+}
+
+table {
+	width: 80%;
+	margin: 20px auto;
+	border-collapse: collapse;
+}
+
+table th, table td {
+	padding: 10px;
+	text-align: left;
+	border: 1px solid #ddd; /* 表格框線 */
+}
+
+table th {
+	background-color: #4CAF50; /* 表頭背景色 */
+	color: white;
+}
+
+body>div:nth-child(2)>form {
+	width: 600px;
+}
 </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>餐點修改 - update_meals_input.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/meals/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
-</nav>
-
 	<div align="center">
-		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{/meals/update}" method="post" th:object="${mealsVO}" enctype="multipart/form-data">
-			<div>
-			<label>餐點編號:</label>
-			<input type="text" th:field="*{mealsId}" style="border:0px ; font-weight: bold;" readonly="readonly" /><br/>
-			</div>
-			
-			<div>
-			<label>餐點類別:</label>
-			<select th:field="*{mealstypesVO.mealsTypesId}">
-				<option th:each="mealstypesVO : ${mealstypesListData}" th:value="${mealstypesVO.mealsTypesId}" th:text="${mealstypesVO.mealsTypesName}" />
-			</select>
-			<span th:if="${#fields.hasErrors('mealstypesVO.mealsTypesId')}" th:errors="*{mealstypesVO.mealsTypesId}" class="error" id="mealstypesVO.mealsTypesId.errors"></span>
-			</div>
-			
-			<div>
-			<label>餐點名稱:</label>
-			<input type="text" th:field="*{mealsName}" onclick="hideContent('mealsName.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealsName')}" th:errors="*{mealsName}" class="error" id="mealsName.errors"></span>
-			</div>
-			
-			<div>
-			<label>餐點價格:</label>
-			<input type="text" th:field="*{mealsPrice}" onclick="hideContent('mealsPrice.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealsPrice')}" th:errors="*{mealsPrice}" class="error" id="mealsPrice.errors"></span>
-			</div>
-			
-			<div>
-			<label>餐點描述:</label>
-			<input type="text" th:field="*{mealsDescription}" onclick="hideContent('mealsDescription.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('mealsDescription')}" th:errors="*{mealsDescription}" class="error" id="mealsDescription.errors"></span>
-			</div>
+		<h2>修改餐點
 
-			<div>
-			<label>餐點控制:</label>
-			<select th:field="*{mealsControl}">
-				<option value="1" th:selected="${mealsVO.mealsControl == 1}">1 上架</option>
-       	   	    <option value="0" th:selected="${mealsVO.mealsControl == 0}">0 下架</option>
-            </select><br/>
-			<span  th:if="${#fields.hasErrors('mealsControl')}" th:errors="*{mealsControl}" class="error" id="mealsControl.errors"></span>
-			</div>
-			
-			
-			
-			
 		
-			<div>
-				<div></div>
-				<div><button type="submit" id="submit"> 送出修改 </button></div>
-				<div></div>
-			</div>		
-		</form>
-	
+			<a class="navbar-brand" th:href="@{/back-end/meals/listAllMeals}"><img
+				th:src="@{/images/upload.gif}" class="small"></a>
+		</h2>
 	</div>
 
 
-<!-- JavaScript part -->
-<script type="text/javascript">
+	<div align="center">
+		<h3>
+			<b>所有欄位皆為必填欄位</b>
+		</h3>
+		<form class="updatemeals" th:action="@{/meals/update}" method="post"
+			th:object="${mealsVO}" enctype="multipart/form-data">
+
+			<table>
+
+				<tr>
+					<td><label>餐點編號:</label></td>
+					<td><input type="text" th:field="*{mealsId}"
+						style="border: 0px; font-weight: bold;" readonly="readonly" /><br />
+					</td>
+				</tr>
+
+				<tr>
+					<td><label>餐點類別:</label></td>
+					<td><select th:field="*{mealstypesVO.mealsTypesId}">
+							<option th:each="mealstypesVO : ${mealstypesListData}"
+								th:value="${mealstypesVO.mealsTypesId}"
+								th:text="${mealstypesVO.mealsTypesName}" />
+					</select> <span th:if="${#fields.hasErrors('mealstypesVO.mealsTypesId')}"
+						th:errors="*{mealstypesVO.mealsTypesId}" class="error"
+						id="mealstypesVO.mealsTypesId.errors"></span></td>
+				</tr>
+
+				<tr>
+					<td><label>餐點名稱:</label></td>
+					<td><input type="text" th:field="*{mealsName}"
+						onclick="hideContent('mealsName.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('mealsName')}" th:errors="*{mealsName}"
+						class="error" id="mealsName.errors"></span>
+						<span id="mealsName-error" class="error"></span>
+	</td>
+				</tr>
+
+				<tr>
+					<td><label>餐點價格:</label></td>
+					<td><input type="text" th:field="*{mealsPrice}"
+						onclick="hideContent('mealsPrice.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('mealsPrice')}"
+						th:errors="*{mealsPrice}" class="error" id="mealsPrice.errors"></span>
+					<span id="mealsPrice-error" class="error"></span>
+					</td>
+				</tr>
+
+				<tr>
+					<td><label>餐點描述:</label></td>
+					<td><input type="text" th:field="*{mealsDescription}"
+						onclick="hideContent('mealsDescription.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('mealsDescription')}"
+						th:errors="*{mealsDescription}" class="error"
+						id="mealsDescription.errors"></span>
+						<span id="mealsDescription-error" class="error"></span></td>
+				</tr>
+
+				<tr>
+					<td><label>餐點控制:</label></td>
+					<td><select th:field="*{mealsControl}">
+							<option value="1" th:selected="${mealsVO.mealsControl == 1}">1
+								上架</option>
+							<option value="0" th:selected="${mealsVO.mealsControl == 0}">0
+								下架</option>
+					</select><br /> <span th:if="${#fields.hasErrors('mealsControl')}"
+						th:errors="*{mealsControl}" class="error" id="mealsControl.errors"></span>
+					</td>
+				</tr>
+
+				<!--             可以不修改圖片  -->
+				<tr>
+					<td><label>餐點圖片:<br>(未選擇圖片維持舊圖)</label></td>
+					<td><input type="file" name="mealPic" id="pic"
+						multiple="multiple" />
+						<div th:each="pic, iterStar: ${mealsVO.mealspics}"
+							th:id="'pic-' + ${iterStar.index}">
+							<div class="pic-item" style="margin-bottom: 10px;">
+								<img
+									th:src="@{/meals/DBGifReader3} + '?mealPicId=' + ${pic.mealPicId}"
+									width="100px">
+
+								<button type="button" class="btn btn-danger delete-pic-btn"
+									th:data-index="${iterStar.index}"
+									th:data-pic-id="${pic.mealPicId}" id="mealPicId"
+									th:value="${pic.mealPicId}">刪除</button>
+
+							</div>
+						</div> <!-- 預覽圖片容器 -->
+						<div id="preview" class="mt-2"></div></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><button type="submit" id="submit">送出修改</button></td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
+
+
+	<!-- JavaScript part -->
+	<script type="text/javascript">
 //清除提示信息
 function hideContent(d) {
      document.getElementById(d).style.display = "none";
 }
+$(document).ready(function() {
+		    // 預覽上傳圖片
+		    $('#pic').on('change',function(event) {
+		       var preview = $('#preview');
+		       preview.empty(); // 清空預覽容器
+		       
+		       var files = event.target.files;
+		       for (var i = 0; i < files.length; i++) {
+		        var file = files[i];
+		        var reader = new FileReader();
+		        reader.onload = function(e) {
+		         var img = $('<img>').attr('src', e.target.result).addClass('img-thumbnail mb-2').css({
+		          width : '150px',
+		          height : '150px'
+		         });
+		         preview.append(img);
+		        };
+		        reader.readAsDataURL(file);
+		       }
+		      });
+});
 
+ // 刪除按鈕點擊事件
+    $(document).ready(function(){
+    	$('.delete-pic-btn').click( function() {
+    	var index = $(this).data('index');
+        var picId = $(this).data('pic-id');
+        var pic = $('#pic-' + index);
+        console.log('刪除圖片ID:', picId);
+
+        
+        // 發送Ajax請求刪除後端數據
+        $.ajax({
+            type: 'POST',
+            url: '/mealspic/deletepic',
+            data: { mealPicId: picId },
+            success: function(response) {
+            	console.log(response);
+            	if(response.success){
+            		// 從預覽區域刪除該圖片元素
+            		console.log('圖片成功刪除');
+            		pic.remove();
+            		}else{
+            			console.log('失敗');
+            		}
+            },
+            error: function() {
+                console.error('刪除圖片時發生錯誤:', error);
+            }
+
+        });
+    });
+});
+
+  //表單提交檢查
+    function meals(event) {
+        var mealsName = document.getElementById('mealsName').value.trim();
+        var mealsPrice = document.getElementById('mealsPrice').value.trim();
+        var mealsDescription = document.getElementById('mealsDescription').value.trim();
+     
+        var errorSpan1 = document.getElementById('mealsName-error');
+        var errorSpan2 = document.getElementById('mealsPrice-error');
+        var errorSpan3 = document.getElementById('mealsDescription-error');
+        
+        let success = true;
+        
+        if (mealsName === "" || mealsName.length >20 ) {
+        	errorSpan1.textContent = "餐點名稱:請勿空白，只能是中英文數字，且字數必須小於20";
+            success = false;
+        }
+        
+        if (mealsPrice === "" ) {
+        	errorSpan2.textContent = "餐點價格不能小於0";
+            success = false;
+        }
+        
+        if (mealsDescription === "" ) {
+        	errorSpan3.textContent = "餐點敘述:請勿空白";
+            success = false;
+        }
+        
+        if(!success){
+        	event.preventDefault(); // 阻止表單提交
+        }
+    }
+    document.querySelector('form.updatemeals').addEventListener('submit', meals);
 
 </script>
 

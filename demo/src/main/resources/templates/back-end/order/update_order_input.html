@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>訂單修改</title>
+
+<head th:insert="~{/back-end/order/included-fragment}"></head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- SweetAlert2 -->
+<style type="text/css">
+    .error {
+        color: red;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    .form-control[readonly] {
+        background-color: #e9ecef;
+    }
+    .fixed-top-buffer {
+        padding-top: 5rem; /* Adjust this value based on the height of your fixed navbar */
+    }
+    .container {
+        max-width: 800px; /* Optional: Set a max-width for better appearance on larger screens */
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <h2 class="text-white">訂單修改</h2>
+        </div>
+        <div class="ml-auto">
+            <h3><a class="navbar-brand" th:href="@{/order/listAllOrder}">回上一頁</a></h3>
+        </div>
+    </div>
+</nav>
+
+<div class="container fixed-top-buffer">
+    <div class="text-center">
+        <h3 class="text-danger"><b>所有欄位皆為必填欄位</b></h3>
+    </div>
+    <form id="submitForm" th:action="@{update}" method="post" th:object="${orderVO}" enctype="multipart/form-data">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">訂單編號:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{ordId}" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">訂單種類:</label>
+            <div class="col-sm-10">
+                <select th:field="*{ordType}" class="form-control" onclick="hideContent('ordType.errors');">
+                    <option value="0" selected>外帶</option>
+                    <option value="1">內用</option>
+                </select>
+                <span th:if="${#fields.hasErrors('ordType')}" th:errors="*{ordType}" class="error" id="ordType.errors"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">總金額:</label>
+            <div class="col-sm-10">
+                <input type="text" th:field="*{ordAmount}" class="form-control" onclick="hideContent('ordAmount.errors');" />
+                <span th:if="${#fields.hasErrors('ordAmount')}" th:errors="*{ordAmount}" class="error" id="ordAmount.errors"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">製作狀態:</label>
+            <div class="col-sm-10">
+                <select th:field="*{ordStatus}" class="form-control" onclick="hideContent('ordStatus.errors');">
+                    <option value="0">已接單</option>
+                    <option value="1">餐點製作中</option>
+                    <option value="2">餐點已完成</option>
+                    <option value="3">餐點已領取</option>
+                    <option value="4">訂單取消</option>
+                </select>
+                <span th:if="${#fields.hasErrors('ordStatus')}" th:errors="*{ordStatus}" class="error" id="ordStatus.errors"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">成立訂單日期:</label>
+            <div class="col-sm-10">
+                <input type="text" id="ordBuilddate" name="ordBuilddate" class="form-control" readonly th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">預約時間:</label>
+            <div class="col-sm-10">
+                <input type="text" id="ordReserveTime" name="ordReserveTime" class="form-control" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">付款狀態:</label>
+            <div class="col-sm-10">
+                <select id="ordPaymentStatus" name="ordPaymentStatus" th:field="*{ordPaymentStatus}" class="form-control" onclick="hideContent('ordPaymentStatus.errors');">
+                    <option value="0">未付款</option>
+                    <option value="1">已付款</option>
+                    <option value="2">已申請退款</option>
+                    <option value="3">退款完成</option>
+                </select>
+                <span th:if="${#fields.hasErrors('ordPaymentStatus')}" th:errors="*{ordPaymentStatus}" class="error" id="ordPaymentStatus.errors"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label form-label">會員:</label>
+            <div class="col-sm-10">
+                <select th:field="*{memVO.memNo}" class="form-control">
+                    <option th:each="memVO : ${memListData}" th:value="${memVO.memNo}" th:text="${memVO.memName}" />
+                </select>
+                <span th:if="${#fields.hasErrors('memVO.memNo')}" th:errors="*{memVO.memNo}" class="error" id="memVO.memNo.errors"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-success" onclick="confirmSubmit(event)">送出修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // 自動填入當下的年月日時分秒
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentDate = new Date();
+        let year = currentDate.getFullYear();
+        let month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+        let day = ('0' + currentDate.getDate()).slice(-2);
+        let hours = ('0' + currentDate.getHours()).slice(-2);
+        let minutes = ('0' + currentDate.getMinutes()).slice(-2);
+        let seconds = ('0' + currentDate.getSeconds()).slice(-2);
+        
+        let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        document.getElementById('ordBuilddate').value = formattedDate;
+    });
+
+    function hideContent(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    function confirmSubmit(event) {
+        event.preventDefault(); // Prevent the default form submission
+        Swal.fire({
+            title: '確認送出修改?',
+            text: "您將提交訂單的修改內容",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '確定',
+            cancelButtonText: '取消'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('submitForm').submit(); // Submit the form if confirmed
+            }
+        })
+    }
+</script>
+</body>
+</html>
