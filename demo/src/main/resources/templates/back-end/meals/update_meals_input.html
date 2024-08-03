@@ -131,11 +131,11 @@ body>div:nth-child(2)>form {
 				<tr>
 					<td><label>餐點控制:</label></td>
 					<td><select th:field="*{mealsControl}">
-							<option value="1" th:selected="${mealsVO.mealsControl == 1}">1
-								上架</option>
-							<option value="0" th:selected="${mealsVO.mealsControl == 0}">0
-								下架</option>
-					</select><br /> <span th:if="${#fields.hasErrors('mealsControl')}"
+							<option value="1" th:selected="${mealsVO.mealsControl == 1}">1 上架</option>
+							<option value="0" th:selected="${mealsVO.mealsControl == 0}">0 下架</option>
+							<option value="2" th:selected="${mealsVO.mealsControl == 0}">2 已售完</option>
+					</select><br /> 
+					<span th:if="${#fields.hasErrors('mealsControl')}"
 						th:errors="*{mealsControl}" class="error" id="mealsControl.errors"></span>
 					</td>
 				</tr>

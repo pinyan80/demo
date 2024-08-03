@@ -174,7 +174,7 @@ color: inherit;
 		<div class="menu-container" id="menu-container">
 			<th:block th:each="mealsVO : ${mealsListData}">
 
-				<div class="menu-item" th:data-meals-type-id="${mealsVO.mealstypesVO.mealsTypesId}">
+				<div th:if="${mealsVO.mealsControl !=0 }" class="menu-item" th:data-meals-type-id="${mealsVO.mealstypesVO.mealsTypesId}">
 					<img th:src="@{|/meals/DBGifReader2?mealsId=${mealsVO.mealsId}|}" alt="meals" width="100px" height="100px">
 					<div class="datails">
 						<h3 th:text="${mealsVO.mealsName}"></h3>
@@ -189,7 +189,7 @@ color: inherit;
 						</p>
 						<div class="buttons">
 							<button th:if="${mealsVO.mealsControl == 1}" th:onclick="'showCustomizationOptions(' + ${mealsVO.mealsId} + ')'">加入購物車</button>
-							<button th:if="${mealsVO.mealsControl == 0}" class="disabled">已售完</button>
+							<button th:if="${mealsVO.mealsControl == 2}" class="disabled">已售完</button>
 							<button th:onclick="'toggleFavorite(this, ' + ${mealsVO.mealsId} + ')'">加入收藏</button>
 						</div>
 					</div>
