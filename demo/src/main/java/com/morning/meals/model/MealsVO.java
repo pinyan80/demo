@@ -14,8 +14,8 @@ import com.morning.ordd.model.OrddVO;
 
 @Entity
 @Table(name = "meals")
-public class MealsVO implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
+public class MealsVO implements java.io.Serializable {  //可被序列化
+	private static final long serialVersionUID = 1L;    //版本控制，不同版本之間的兼容性
 
 	private Integer mealsId;
 	private MealsTypesVO mealstypesVO;
@@ -27,12 +27,14 @@ public class MealsVO implements java.io.Serializable {
 	private Integer mealsTotalPeople;
 	private List<MealsPicVO> mealspics = new ArrayList<>();
 	private List<OrddVO> orderDetails = new ArrayList<>();
+//	用ArrayList避免出現空值例外，符合JavaBean規範應該有合理的初始值(會是空的集合不是null)
 
+//	無參數建構子
 	public MealsVO() {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)   //主鍵自動生成
 	@Column(name = "meals_id", updatable = false, insertable = false)
 	public Integer getMealsId() {
 		return mealsId;
@@ -54,7 +56,7 @@ public class MealsVO implements java.io.Serializable {
 
 	@Column(name = "meals_name")
 	@NotEmpty(message = "餐點名稱不能空白")
-	@Pattern(regexp = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9)]{1,20}$", message = "餐點名稱:只能是中英文數字，且長度必須小於20")
+	@Pattern(regexp = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9)]{1,20}$", message = "餐點名稱:只能是中英文數字，且長度必須小於20")  //正則表達式
 	public String getMealsName() {
 		return mealsName;
 	}

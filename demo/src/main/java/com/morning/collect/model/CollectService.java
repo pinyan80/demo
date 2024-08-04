@@ -11,27 +11,27 @@ public class CollectService {
 	@Autowired
 	CollectRepository repository;
 
-	// 會員查詢收藏 全部
+//	會員查詢收藏 全部
 	public List<CollectVO> showFavorite(Integer memNo) {
 		return repository.findByMemNo(memNo);
 	}
 
-	// 加入收藏
+//	加入收藏
 	public void addFavorite(CollectVO collectVO) {
 		repository.save(collectVO);
 	}
 
-	// 取消收藏
+//	取消收藏(刪除)
 	public void deleteFavorite(Integer memNo, Integer mealsId) {
 		repository.deleteByMemNoAndMealsId(memNo, mealsId);
 	}
 
-	// 查詢會員收藏
+//	檢查該會員是否已經收藏
 	public boolean isFavoriteExists(Integer memNo, Integer mealsId) {
 		return repository.existsByMemNoAndMealsId(memNo, mealsId);
 	}
 
-	// 用輸入的memNo去CollectVO查mealsId
+//	用輸入的memNo去CollectVO查mealsId
 	public List<Integer> getUserFavorites(Integer memNo) {
 		return repository.findMealsIdsByMemNo(memNo);
 	}

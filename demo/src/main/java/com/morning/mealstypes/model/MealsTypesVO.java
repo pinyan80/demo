@@ -24,8 +24,9 @@ public class MealsTypesVO implements java.io.Serializable{
 
 	private Integer mealsTypesId;
 	private String mealsTypesName;
-	private Set<MealsVO> mealsVO;
+	private Set<MealsVO> mealsVO;  //Set集合，儲存跟餐點類別相關的，無序不可重複(避免重複餐點，一對多更適合用set)
 	
+//	無參數建構子
 	public MealsTypesVO() {
 		
 	}
@@ -58,7 +59,7 @@ public class MealsTypesVO implements java.io.Serializable{
 		return mealsVO;
 	}
 
-	public void setMeals(Set<MealsVO> meals) {
+	public void setMeals(Set<MealsVO> mealsVO) {
 		this.mealsVO = mealsVO;
 	}
 

@@ -18,10 +18,10 @@ public class MenuController {
 	@Autowired
 	MealsService mealsSvc;
 
-	// 菜單
+//	菜單
 	@GetMapping("/menu")
 	public String showMenu(Model model) {
-		List<MealsVO> mealsList = mealsSvc.getAllMeals();
+		List<MealsVO> mealsList = mealsSvc.getAll();
 		model.addAttribute("mealsList", mealsList);
 		return "front-end/menu/menu";
 	}

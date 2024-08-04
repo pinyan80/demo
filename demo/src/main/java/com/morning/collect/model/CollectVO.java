@@ -18,50 +18,40 @@ public class CollectVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id",updatable = false, insertable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	private Integer	id;
-
+	@Column(name = "id", updatable = false, insertable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "mem_no",referencedColumnName="mem_no")
+	@JoinColumn(name = "mem_no", referencedColumnName = "mem_no")
 	private MemVO memVO;
 
 	@ManyToOne
-	@JoinColumn(name = "meals_id",referencedColumnName="meals_id")
+	@JoinColumn(name = "meals_id", referencedColumnName = "meals_id")
 	private MealsVO mealsVO;
 
-	
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
 	public MemVO getMemVO() {
 		return memVO;
 	}
-
 
 	public void setMemVO(MemVO memVO) {
 		this.memVO = memVO;
 	}
 
-
 	public MealsVO getMealsVO() {
 		return mealsVO;
 	}
 
-
 	public void setMealsVO(MealsVO mealsVO) {
 		this.mealsVO = mealsVO;
 	}
-
-
-
 
 }

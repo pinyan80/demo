@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>morningcode</title>
 <link rel="stylesheet" th:href="@{/css/index2.css}" />
 
 <!-- 引入 Font Awesome 图标库 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
 
 <style>
 .navbar {
@@ -155,12 +155,12 @@ body>div {
 }
 
 .fa-star {
-    color: #f7d206;
+	color: #f7d206;
 }
 
-.dropdown-content a{
-text-decoration: none;
-color: inherit;
+.dropdown-content a {
+	text-decoration: none;
+	color: inherit;
 }
 </style>
 
@@ -174,13 +174,15 @@ color: inherit;
 		<div class="menu-container" id="menu-container">
 			<th:block th:each="mealsVO : ${mealsListData}">
 
-				<div th:if="${mealsVO.mealsControl !=0 }" class="menu-item" th:data-meals-type-id="${mealsVO.mealstypesVO.mealsTypesId}">
-					<img th:src="@{|/meals/DBGifReader2?mealsId=${mealsVO.mealsId}|}" alt="meals" width="100px" height="100px">
+				<div th:if="${mealsVO.mealsControl !=0 }" class="menu-item"
+					th:data-meals-type-id="${mealsVO.mealstypesVO.mealsTypesId}">
+					<img th:src="@{|/meals/DBGifReader2?mealsId=${mealsVO.mealsId}|}"
+						alt="meals" width="100px" height="100px">
 					<div class="datails">
 						<h3 th:text="${mealsVO.mealsName}"></h3>
 						<p th:text="${mealsVO.mealsDescription}"></p>
 						<p class="star">
-							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i> 
 							<span th:text="${mealsVO.mealsTotalScore}"></span>
 						</p>
 						<p class="price">
@@ -190,17 +192,20 @@ color: inherit;
 						<div class="buttons">
 							<button th:if="${mealsVO.mealsControl == 1}" th:onclick="'showCustomizationOptions(' + ${mealsVO.mealsId} + ')'">加入購物車</button>
 							<button th:if="${mealsVO.mealsControl == 2}" class="disabled">已售完</button>
-							<button th:onclick="'toggleFavorite(this, ' + ${mealsVO.mealsId} + ')'">加入收藏</button>
+							<button	th:onclick="'toggleFavorite(this, ' + ${mealsVO.mealsId} + ')'">加入收藏</button>
 						</div>
 					</div>
 				</div>
 				<!-- 客製化彈窗 Modal -->
-				<div class="modal fade" id="customizationModal" tabindex="-1" role="dialog" aria-labelledby="customizationModalLabel" aria-hidden="true">
+				<div class="modal fade" id="customizationModal" tabindex="-1"
+					role="dialog" aria-labelledby="customizationModalLabel"
+					aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="customizationModalLabel">客製化選項</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
@@ -208,8 +213,10 @@ color: inherit;
 								<div id="customizationOptionsContainer"></div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-								<button type="button" class="btn btn-primary" th:onclick="'addToCartWithCustomization(' + ${mealsVO.mealsId} + ')'">確定</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">取消</button>
+								<button type="button" class="btn btn-primary"
+									th:onclick="'addToCartWithCustomization(' + ${mealsVO.mealsId} + ')'">確定</button>
 							</div>
 						</div>
 					</div>
@@ -218,7 +225,7 @@ color: inherit;
 		</div>
 	</div>
 
-	
+
 
 	<!-- 收藏訊息彈窗 -->
 	<div id="favoriteModal" class="modal">
@@ -228,12 +235,12 @@ color: inherit;
 		</div>
 	</div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!-- 加入購物車按鈕-客製化 -->
-<script>
+	<!-- 加入購物車按鈕-客製化 -->
+	<script>
     function showCustomizationOptions(mealsId) {
     	
         $.ajax({
@@ -307,7 +314,8 @@ function sortMenuItems() {
 document.addEventListener('DOMContentLoaded', sortMenuItems);
 
 //收藏功能==============================================================
-function toggleFavorite(button, mealsId) {
+//POST提交處理數據
+	function toggleFavorite(button, mealsId) {
 	if (!isLoggedIn()) {
 		showFavoriteModal("清先登入以使用收藏功能");
         return;
@@ -340,8 +348,9 @@ function toggleFavorite(button, mealsId) {
 function isLoggedIn(){
 	return true;
 }
+//儲存會員收藏的餐點ID
 let userFavorites = [];
-
+//GET用於獲取信息
 function loadUserFavorites() {
     $.ajax({
         url: '/collect/getUserFavorites',
@@ -367,6 +376,7 @@ function updateFavoriteButtons() {
         }
     });
 }
+
 
 // 在頁面加載完成後執行
 $(document).ready(function() {
@@ -397,8 +407,8 @@ window.onclick = function(event) {
 
 </script>
 
-<!-- 最上行js -->
-<script th:inline="javascript">
+	<!-- 最上行js -->
+	<script th:inline="javascript">
    var baseUrl = /*[[@{/}]]*/ '/';
 
  

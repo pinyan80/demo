@@ -36,7 +36,7 @@ public class MealsTypesController {
 		return "back-end/mealstypes/addMealsTypes";
 	}
 
-	// 新增
+//	新增
 	@PostMapping("insert")
 	public String insert(@Valid MealsTypesVO mealstypesVO, BindingResult result, ModelMap model) throws IOException {
 
@@ -58,11 +58,11 @@ public class MealsTypesController {
 		return "/back-end/mealstypes/listAllMealsTypes";
 	}
 
-	// 修改
+//	修改單個餐點類別(顯示指定類別在表單上)
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("mealsTypesId") String mealsTypesId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		
+
 		/*************************** 2.開始查詢資料 *****************************************/
 
 		MealsTypesVO mealstypesVO = mealstypesSvc.getOneMealsTypes(Integer.valueOf(mealsTypesId));
@@ -72,14 +72,11 @@ public class MealsTypesController {
 		return "back-end/mealstypes/update_mealstypes_input";
 	}
 
-
-
-	// 更新
+//	更新(處理更新請求，驗證跟保存)
 	@PostMapping("update")
 	public String update(@Valid MealsTypesVO mealstypesVO, BindingResult result, ModelMap model) throws IOException {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		result = removeFieldError(mealstypesVO, result, "mealsTypesId");
-
 
 		if (result.hasErrors()) {
 			model.addAttribute("mealstypesVO", mealstypesVO);
@@ -96,23 +93,22 @@ public class MealsTypesController {
 		return "back-end/mealstypes/listAllMealsTypes";
 	}
 
-	// 全資料
+//	查詢所有餐點類別
 	@ModelAttribute("mealstypesListData")
 	protected List<MealsTypesVO> referenceListData() {
 		List<MealsTypesVO> list = mealstypesSvc.getAll();
 		return list;
 	}
-	
-	// 去除BindingResult中某個欄位的FieldError紀錄
-		public BindingResult removeFieldError(MealsTypesVO mealstypesVO, BindingResult result, String removedFieldname) {
-			List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
-					.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
-			result = new BeanPropertyBindingResult(mealstypesVO, "mealstypesVO");
-			for (FieldError fieldError : errorsListToKeep) {
-				result.addError(fieldError);
-			}
-			return result;
-		}
 
+//	去除BindingResult中某個欄位的FieldError紀錄
+	public BindingResult removeFieldError(MealsTypesVO mealstypesVO, BindingResult result, String removedFieldname) {
+		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
+		result = new BeanPropertyBindingResult(mealstypesVO, "mealstypesVO");
+		for (FieldError fieldError : errorsListToKeep) {
+			result.addError(fieldError);
+		}
+		return result;
+	}
 
 }

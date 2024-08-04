@@ -44,14 +44,14 @@ public class MealsPicController {
 		return "back-end/mealspic/addMealsPic";
 	}
 
-	// 新增
+//	新增
 	@PostMapping("insert")
 	public String insert(@Valid MealsPicVO mealspicVO, BindingResult result, ModelMap model,
 			@RequestParam("mealPic") MultipartFile[] parts) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+		// 去除BindingResult中upFiles欄位的FieldError紀錄
 		result = removeFieldError(mealspicVO, result, "mealPic");
 
 		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
@@ -75,7 +75,7 @@ public class MealsPicController {
 		return "back-end/meals/listAllMeals";
 	}
 
-	// 修改
+//	修改
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("mealPicId") String mealPicId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
@@ -88,6 +88,7 @@ public class MealsPicController {
 		return "back-end/mealspic/update_mealspic_input";
 	}
 
+//	修改
 	@PostMapping("update")
 	public String update(@Valid MealsPicVO mealspicVO, BindingResult result, ModelMap model,
 			@RequestParam("mealPic") MultipartFile[] parts) throws IOException {
@@ -117,7 +118,7 @@ public class MealsPicController {
 		return "back-end/mealspic/listOneMealsPic";
 	}
 
-	// 刪除
+//	刪除
 	@PostMapping("delete")
 	public String delete(@RequestParam("mealPicId") String mealPicId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
@@ -130,36 +131,37 @@ public class MealsPicController {
 		model.addAttribute("success", "- (刪除成功)");
 		return "back-end/mealspic/listAllMealsPic"; // 刪除完成後轉交
 	}
-	
-	// 修改，刪除圖片
-		@PostMapping("deletepic")
-		@ResponseBody
-		public Map<String, Object> deleteMealPic(@RequestParam("mealPicId") Integer mealPicId) {
-			Map<String, Object> response = new HashMap<>();
-			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-			/*************************** 2.開始刪除資料 *****************************************/
-			boolean success = mealspicSvc.deleteMealPics(mealPicId);
-			
-			/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
-			if(success) {
-				response.put("success", true);
-				System.out.println("成功");
-				
-			}else {
-				response.put("success", false);
-				response.put("message", "失敗");
-			}
 
-			return response; // 刪除完成後轉交
+//	修改，刪除圖片
+	@PostMapping("deletepic")
+	@ResponseBody
+	public Map<String, Object> deleteMealPic(@RequestParam("mealPicId") Integer mealPicId) {
+		Map<String, Object> response = new HashMap<>();
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		/*************************** 2.開始刪除資料 *****************************************/
+		boolean success = mealspicSvc.deleteMealPics(mealPicId);
+
+		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
+		if (success) {
+			response.put("success", true);
+			System.out.println("成功");
+
+		} else {
+			response.put("success", false);
+			response.put("message", "失敗");
 		}
 
+		return response; // 刪除完成後轉交
+	}
+
+//	拿取所有餐點列表
 	@ModelAttribute("mealsListData")
 	protected List<MealsVO> referenceListData() {
 		List<MealsVO> list = mealsSvc.getAll();
 		return list;
 	}
 
-	// 去除BindingResult中某個欄位的FieldError紀錄
+//	去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(MealsPicVO mealspicVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
 				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());

@@ -11,18 +11,18 @@ import org.springframework.data.repository.query.Param;
 
 public interface CollectRepository extends JpaRepository<CollectVO, Integer> {
 
-//	查詢會員所有收藏
-	@Query(value = "select * from collect where mem_no = ?1", nativeQuery = true)
+//	查詢該會員所有收藏
+	@Query(value = "SELECT * FROM collect WHERE mem_no = ?1", nativeQuery = true)
 	List<CollectVO> findByMemNo(Integer memNo);
 
 //	取消收藏
 	@Transactional
 	@Modifying
-	@Query(value = "delete from collect where mem_no = ?1 and meals_id = ?2", nativeQuery = true)
+	@Query(value = "DELETE FROM collect WHERE mem_no = ?1 and meals_id = ?2", nativeQuery = true)
 	void deleteByMemNoAndMealsId(Integer memNo, Integer mealsId);
 
 //	查詢會員是否有收藏
-	@Query(value = "select count(*) > 0 from collect where mem_no = ?1 and meals_id = ?2", nativeQuery = true)
+	@Query(value = "SELECT count(*) > 0 FROM collect WHERE mem_no = ?1 and meals_id = ?2", nativeQuery = true)
 	boolean existsByMemNoAndMealsId(Integer memNo, Integer mealsId);
 
 //	用輸入的memNo去CollectVO查mealsId

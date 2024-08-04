@@ -23,17 +23,17 @@ import com.morning.meals.model.MealsVO;
 import com.morning.mem.model.MemVO;
 
 @Controller
-@Validated
+@Validated // 啟用Spring驗證功能
 @RequestMapping("/collect")
 public class CollectController {
 
 	@Autowired
 	CollectService collectSvc;
 
-	// 顯示收藏清單
+//	顯示收藏清單
 	@GetMapping("listfavorite")
 	public String addToFavorite(HttpSession session, Model model, String memNo) {
-
+		// 從session獲得燈下登陸的memNo
 		MemVO loginid = (MemVO) session.getAttribute("memVO");
 
 //不需要驗證
@@ -49,7 +49,7 @@ public class CollectController {
 		return "/front-end/menu/listfavorite";
 	}
 
-	// 加入收藏
+//	加入收藏(JSON)
 	@PostMapping("add")
 	@ResponseBody
 	public Map<String, Object> addToFavorite(HttpSession session, @RequestParam Integer mealsId) {
@@ -81,7 +81,7 @@ public class CollectController {
 		return response;
 	}
 
-	// 取消收藏
+//	取消收藏(JSON)
 	@PostMapping("remove")
 	@ResponseBody
 	public Map<String, Object> deleteFavorite(HttpSession session, @RequestParam Integer mealsId) {
@@ -105,6 +105,7 @@ public class CollectController {
 		return response;
 	}
 
+//	查詢會員收藏的mealsId(JSON)
 	@GetMapping("getUserFavorites")
 	@ResponseBody
 	public List<Integer> getUserFavorites(HttpSession session) {

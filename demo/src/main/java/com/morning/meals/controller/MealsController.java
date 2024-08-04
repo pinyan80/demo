@@ -42,7 +42,7 @@ public class MealsController {
 
 	@Autowired
 	MealsPicService mealspicSvc;
-	
+
 	@GetMapping("addMeals")
 	public String addMeals(ModelMap model) {
 		MealsVO mealsVO = new MealsVO();
@@ -50,10 +50,10 @@ public class MealsController {
 		return "back-end/meals/addMeals";
 	}
 
-	// 新增
+//	新增餐點
 	@PostMapping("insert")
 	public String insert(@Valid MealsVO mealsVO, BindingResult result, ModelMap model,
-			@RequestParam("mealPic") MultipartFile[] parts ) throws IOException {
+			@RequestParam("mealPic") MultipartFile[] parts) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		result = removeFieldError(mealsVO, result, "mealPic");
@@ -62,19 +62,19 @@ public class MealsController {
 			model.addAttribute("errorMessage", "餐點圖片: 請上傳");
 		} else {
 			List<MealsPicVO> picSet = new ArrayList<>();
-			
+
 			for (MultipartFile multipartFile : parts) {
 				byte[] buf = multipartFile.getBytes();
-				
+
 				MealsPicVO mealspicVO = new MealsPicVO();
 				mealspicVO.setMealPic(buf);
 				mealspicVO.setMealsVO(mealsVO);
-				
+
 				picSet.add(mealspicVO);
 			}
 			mealsVO.setMealspics(picSet);
 		}
-		
+
 		if (result.hasErrors() || parts[0].isEmpty()) {
 			return "back-end/meals/addMeals";
 		}
@@ -84,17 +84,17 @@ public class MealsController {
 		mealsSvc.addMeals(mealsVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
 		List<MealsVO> list = mealsSvc.getAll();
-		model.addAttribute("mealsListData", list);	
+		model.addAttribute("mealsListData", list);
 		model.addAttribute("success", "- (新增成功)");
 		System.out.println("ok");
 		return "back-end/meals/listOneMeals";
 	}
 
-	// 修改
+//	修改
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("mealsId") String mealsId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		
+
 		/*************************** 2.開始查詢資料 *****************************************/
 
 		MealsVO mealsVO = mealsSvc.getOneMeals(Integer.valueOf(mealsId));
@@ -104,9 +104,10 @@ public class MealsController {
 		return "back-end/meals/update_meals_input";
 	}
 
+//	修改餐點
 	@PostMapping("update")
 	public String update(@Valid MealsVO mealsVO, BindingResult result, ModelMap model,
-			@RequestParam("mealPic") MultipartFile[] parts ) throws IOException {
+			@RequestParam("mealPic") MultipartFile[] parts) throws IOException {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		result = removeFieldError(mealsVO, result, "mealPic");
 
@@ -114,23 +115,18 @@ public class MealsController {
 			model.addAttribute("errorMessage", "餐點圖片: 請上傳");
 		} else {
 			List<MealsPicVO> picSet = new ArrayList<>();
-			
+
 			for (MultipartFile multipartFile : parts) {
 				byte[] buf = multipartFile.getBytes();
-				
+
 				MealsPicVO mealspicVO = new MealsPicVO();
 				mealspicVO.setMealPic(buf);
 				mealspicVO.setMealsVO(mealsVO);
-				
+
 				picSet.add(mealspicVO);
 			}
 			mealsVO.setMealspics(picSet);
 		}
-		
-//		if (result.hasErrors()) {
-//		
-//			return "back-end/meals/update_meals_input";
-//		}
 
 		/*************************** 2.開始修改資料 *****************************************/
 		mealsSvc.updateMeals(mealsVO);
@@ -142,36 +138,14 @@ public class MealsController {
 		return "back-end/meals/listOneMeals";
 	}
 
-//	// 修改，刪除圖片
-//	@PostMapping("deletepic")
-//	@ResponseBody
-//	public Map<String, Object> deleteMealPic(@RequestParam("mealPicId") Integer mealPicId) {
-//		Map<String, Object> response = new HashMap<>();
-//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-//		/*************************** 2.開始刪除資料 *****************************************/
-//		boolean success = mealsSvc.deleteMealPics(mealPicId);
-//		
-//		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
-//		if(success) {
-//			response.put("success", true);
-//			System.out.println("成功");
-//			
-//		}else {
-//			response.put("success", false);
-//			response.put("message", "失敗");
-//		}
-//
-//		return response; // 刪除完成後轉交
-//	}
-
-	
+//	拿取所有餐點類別列表
 	@ModelAttribute("mealstypesListData")
 	protected List<MealsTypesVO> referenceListData() {
 		List<MealsTypesVO> list = mealstypesSvc.getAll();
 		return list;
 	}
 
-	// 去除BindingResult中某個欄位的FieldError紀錄
+//	去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(MealsVO mealsVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
 				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
@@ -181,22 +155,23 @@ public class MealsController {
 		}
 		return result;
 	}
-	
-	// 每天每一個小時(第0秒整點)執行一次更新 meals 表格的 meals_total_score
+
+//	定時更新餐點評分
+//	每天每一個小時(第0秒整點)執行一次更新 meals 表格的 meals_total_score
 	@Scheduled(cron = "0 0 * * * *")
 	@Transactional
 	public void updateScore() {
 		// 查詢 orddetails 表格中的 meals_score 欄位的平均值和總個數
 		Integer mealsnumber = mealsSvc.getmealsnumber();
-		
-		for(int i=1; i <= mealsnumber ; i++) {
-						
+
+		for (int i = 1; i <= mealsnumber; i++) {
+
 			Double mealsavg = mealsSvc.getavgscore(i);
-			
-			if(mealsavg == null) {
+
+			if (mealsavg == null) {
 				continue;
 			}
-			
+
 			mealsSvc.updateMealsScore(mealsavg, i); // 更新 meals 實體
 		}
 
